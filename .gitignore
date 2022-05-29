@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+bin
+build
+.record.txt.swp
+record.txt
+include
+cmake-build-debug
+.idea
+dist
+*.egg-info
