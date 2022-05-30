@@ -1,6 +1,9 @@
-//
-// Created by liyinbin on 2022/5/30.
-//
+/****************************************************************
+ * Copyright (c) 2022, liyinbin
+ * All rights reserved.
+ * Author by liyibin (jeff.li)
+ *
+ *****************************************************************/
 
 #include "libnlp/normalize/xstring.h"
 #include "libnlp/normalize/cc/libnlp_cc.h"

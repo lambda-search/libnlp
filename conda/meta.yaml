@@ -1,3 +1,10 @@
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
 
 {% set version = environ.get('GIT_DESCRIBE_TAG').lstrip('v') %}
 {% set number = GIT_DESCRIBE_NUMBER %}

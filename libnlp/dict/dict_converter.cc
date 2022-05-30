@@ -1,4 +1,11 @@
 
+/****************************************************************
+ * Copyright (c) 2022, liyinbin
+ * All rights reserved.
+ * Author by liyibin (jeff.li)
+ *
+ *****************************************************************/
+
 
 #include "libnlp/dict/dict_converter.h"
 #include "libnlp/dict/marisa_dict.h"

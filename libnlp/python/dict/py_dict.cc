@@ -1,3 +1,9 @@
+/****************************************************************
+ * Copyright (c) 2022, liyinbin
+ * All rights reserved.
+ * Author by liyibin (jeff.li)
+ *
+ *****************************************************************/
 
 #include "libnlp/python/dict/py_dict_entry.h"
 #include "libnlp/python/dict/py_dict_base.h"

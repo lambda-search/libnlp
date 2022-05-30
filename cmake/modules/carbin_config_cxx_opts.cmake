@@ -1,3 +1,10 @@
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
 
 include(carbin_generated_copts)
 include(carbin_print_list)

@@ -1,3 +1,10 @@
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
 
 find_path(FLARE_INCLUDE_PATH NAMES flare/idl_options.pb.h)
 find_library(FLARE_LIB NAMES flare)

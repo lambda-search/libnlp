@@ -1,6 +1,11 @@
-//
-// Created by liyinbin on 2022/5/30.
-//
+
+/****************************************************************
+ * Copyright (c) 2022, liyinbin
+ * All rights reserved.
+ * Author by liyibin (jeff.li)
+ *
+ *****************************************************************/
+
 
 #ifndef LIBNLP_NORMALIZE_OPTION_H_
 #define LIBNLP_NORMALIZE_OPTION_H_

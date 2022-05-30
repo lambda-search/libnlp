@@ -1,3 +1,10 @@
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
 set(CPACK_RPM_PACKAGE_DEBUG 1)
 set(CPACK_RPM_RUNTIME_DEBUGINFO_PACKAGE ON)
 set(CPACK_RPM_PACKAGE_RELOCATABLE ON)

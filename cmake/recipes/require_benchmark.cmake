@@ -1,3 +1,10 @@
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
 
 find_path(BENCHMARK_INCLUDE_PATH NAMES benchmark/benchmark.h)
 find_library(BENCHMARK_LIB NAMES libbenchmark.a benchmark)

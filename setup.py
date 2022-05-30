@@ -1,3 +1,11 @@
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
+
 import os
 import re
 import subprocess
@@ -26,7 +34,7 @@ except ImportError:
 
 
 def get_version_info():
-    version_info = ['0', '1', '5']
+    version_info = ['0', '2', '0']
     version_pattern = re.compile(
         r'NLPCC_VERSION_(MAJOR|MINOR|REVISION) (\d+)')
     with open(_cmake_file, 'rb') as f:
@@ -169,7 +177,7 @@ class BDistWheelCommand(wheel.bdist_wheel.bdist_wheel, object):
         self.plat_name = self._determine_platform_tag()
 
 
-packages = ['libnlp', 'libnlp.normalize', 'libnlp.normalize.cc', 'libnlp.clib']
+packages = ['libnlp', 'libnlp.normalize','libnlp.clib']
 
 
 setuptools.setup(
@@ -201,7 +209,6 @@ setuptools.setup(
         'Natural Language :: Chinese (Simplified)',
         'Natural Language :: Chinese (Traditional)',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: Apache Software License',
         'Topic :: Scientific/Engineering',

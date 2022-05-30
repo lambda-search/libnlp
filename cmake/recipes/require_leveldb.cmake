@@ -1,3 +1,10 @@
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
 
 
 find_path(LEVELDB_INCLUDE_PATH NAMES leveldb/db.h)

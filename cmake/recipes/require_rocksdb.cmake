@@ -1,3 +1,10 @@
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
 
 find_path(ROCKSDB_INCLUDE_PATH NAMES rocksdb/env.h)
 find_library(ROCKSDB_LIB NAMES rocksdb)

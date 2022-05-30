@@ -1,4 +1,11 @@
 
+/****************************************************************
+ * Copyright (c) 2022, liyinbin
+ * All rights reserved.
+ * Author by liyibin (jeff.li)
+ *
+ *****************************************************************/
+
 #pragma once
 
 #ifdef _MSC_VER

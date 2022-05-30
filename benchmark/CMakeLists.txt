@@ -1,12 +1,13 @@
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
 
 include(require_benchmark)
 include(carbin_cc_benchmark)
-#[[
-
-add_executable(libnlp_cc_performance libnlp_cc_performance.cc)
-target_link_libraries(libnlp_cc_performance ${BENCHMARK_LIB} libnlp::libnlp)
-add_test(BenchmarkTest libnlp_cc_performance)
-]]
 
 carbin_cc_benchmark(
         NAME libnlp_cc_performance

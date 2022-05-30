@@ -1,3 +1,10 @@
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
 
 include(carbin_print)
 macro(CARBIN_ENSURE_OUT_OF_SOURCE_BUILD errorMessage)

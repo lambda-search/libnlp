@@ -1,3 +1,11 @@
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
+
 cmake_minimum_required(VERSION 3.15)
 
 # TODO modify this for you project

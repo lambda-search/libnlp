@@ -1,3 +1,10 @@
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
 
 find_path(GMOCK_INCLUDE_PATH NAMES gmock/gmock.h)
 find_library(GMOCK_LIB NAMES libgmock.a gmock)

@@ -1,3 +1,11 @@
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
+
 find_package(PythonInterp REQUIRED)
 
 set(CC_DICT_BIN cc_dict)

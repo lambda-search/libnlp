@@ -1,3 +1,11 @@
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
+
 # Locate the Google C++ Mocking Framework.
 # (This file is almost an identical copy of the original FindGTest.cmake file,
 #  feel free to use it as it is or modify it for your own needs.)

@@ -1,4 +1,12 @@
 
+/****************************************************************
+ * Copyright (c) 2022, liyinbin
+ * All rights reserved.
+ * Author by liyibin (jeff.li)
+ *
+ *****************************************************************/
+
+
 #include <cctype>
 #include "libnlp/normalize/xstring.h"
 

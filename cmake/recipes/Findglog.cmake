@@ -1,3 +1,11 @@
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
+
 # GLOG_FOUND - system has Glog
 # GLOG_INCLUDE_DIRS - the Glog include directories
 # GLOG_LIBRARIES - link these to use Glog

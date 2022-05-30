@@ -1,4 +1,10 @@
-
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
 
 find_path(FAISS_INCLUDE_PATH NAMES faiss/Index.h)
 find_library(FAISS_LIB NAMES faiss)

@@ -5,6 +5,13 @@ Usage: <path_to_abel>/copts/generate_copts.py
 
 The configs are generated from copts.py.
 """
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
 
 from os import path
 import sys

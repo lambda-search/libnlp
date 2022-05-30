@@ -1,4 +1,11 @@
 
+/****************************************************************
+ * Copyright (c) 2022, liyinbin
+ * All rights reserved.
+ * Author by liyibin (jeff.li)
+ *
+ *****************************************************************/
+
 
 #ifndef LIBNLP_NORMALIZE_NORMALIZER_H_
 #define LIBNLP_NORMALIZE_NORMALIZER_H_

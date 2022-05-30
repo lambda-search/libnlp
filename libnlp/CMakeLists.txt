@@ -1,4 +1,10 @@
-
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
 
 FILE(GLOB_RECURSE BASE_SRC "base/*.cc")
 FILE(GLOB_RECURSE DICT_SRC "dict/*.cc")

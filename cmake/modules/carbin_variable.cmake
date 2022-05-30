@@ -1,3 +1,10 @@
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
 
 if (NOT CARBIN_PUBLIC_LIBS)
     set(CARBIN_PUBLIC_LIBS "")

@@ -1,3 +1,10 @@
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
 
 find_path(GTEST_INCLUDE_PATH NAMES gtest/gtest.h)
 find_library(GTEST_LIB NAMES libgtest.a gtest)

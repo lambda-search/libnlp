@@ -1,4 +1,10 @@
-
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
 
 set (DIR_PREFIX ${CMAKE_INSTALL_PREFIX})
 set (DIR_INCLUDE ${DIR_PREFIX}/include/)

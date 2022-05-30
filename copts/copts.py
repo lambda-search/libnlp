@@ -10,7 +10,13 @@ compilation options:
 The generated copts are consumed by configure_copts.bzl and
 CarbinConfigureCopts.cmake.
 """
-
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
 # /Wall with msvc includes unhelpful warnings such as C4711, C4710, ...
 MSVC_BIG_WARNING_FLAGS = [
     "/W3",

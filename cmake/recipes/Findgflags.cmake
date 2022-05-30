@@ -1,3 +1,11 @@
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
+
 # Since this file is named FindGflags.cmake the cmake convention
 # is for the module to export both GFLAGS_FOUND and Gflags_FOUND.
 # The convention expected by consumers is that we export the

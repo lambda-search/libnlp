@@ -1,3 +1,10 @@
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
 
 find_path(FRAT_INCLUDE_PATH NAMES frat/log.h)
 find_library(FRAT_LIB NAMES frat)

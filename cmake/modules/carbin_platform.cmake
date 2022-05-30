@@ -1,3 +1,10 @@
+################################################################
+#
+# Copyright (c) 2022, liyinbin
+# All rights reserved.
+# Author by liyibin (jeff.li)
+#
+#################################################################
 
 set(CARBIN_COMPILER_NAME "")
 set(CARBIN_SYSTEM_VERSION_NAME "")
