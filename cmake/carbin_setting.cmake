@@ -22,5 +22,5 @@ if (DEFINED LIB_INSTALL_DIR)
     set (DIR_LIBRARY ${LIB_INSTALL_DIR})
 endif (DEFINED LIB_INSTALL_DIR)
 
-set (DIR_SHARE_CC ${DIR_SHARE}/libnlp/normalize/cc)
+set (DIR_SHARE_CC ${DIR_SHARE}/libnlp/normalize)
 set (DIR_SHARE_LOCALE ${DIR_SHARE}/locale/)

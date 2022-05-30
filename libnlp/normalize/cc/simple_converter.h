@@ -40,7 +40,7 @@ namespace libnlp::cc {
          * Constructor of simple_converter
          * @param configFileName File name of configuration.
          */
-        simple_converter(const std::string &configFileName);
+        explicit simple_converter(const std::string &configFileName);
 
         ~simple_converter();
 

@@ -9,24 +9,24 @@ _test_assets_dir = os.path.join(_nlpcc_rootdir, 'test', 'testdata','testcases')
 
 
 def test_import():
-    import libnlp.cc  # noqa
+    import libnlp.normalize  # noqa
 
 
 def test_init_delete_converter():
-    import libnlp.cc
+    import libnlp.normalize
 
-    for config in libnlp.cc.CONFIGS:
-        converter = libnlp.cc.nlpcc(config)
+    for config in libnlp.normalize.CONFIGS:
+        converter = libnlp.normalize.nlpcc(config)
         del converter
 
 
 def test_conversion():
-    import libnlp.cc
+    import libnlp.normalize
 
     for inpath in glob(os.path.join(_test_assets_dir, '*.in')):
         pref = os.path.splitext(inpath)[0]
         config = os.path.basename(pref)
-        converter = libnlp.cc.nlpcc(config)
+        converter = libnlp.normalize.nlpcc(config)
         anspath = '{}.{}'.format(pref, 'ans')
         assert os.path.isfile(anspath)
 

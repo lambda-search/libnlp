@@ -19,14 +19,14 @@ _readme_file = os.path.join(_this_dir, 'README.md')
 try:
     sys.path.insert(0, os.path.join(_this_dir, 'python'))
 
-    import libnlp.cc  # noqa
+    import libnlp.normalize_cc  # noqa
     _libnlpcc_built = True
 except ImportError:
     _libnlpcc_built = False
 
 
 def get_version_info():
-    version_info = ['0', '1', '0']
+    version_info = ['0', '1', '5']
     version_pattern = re.compile(
         r'NLPCC_VERSION_(MAJOR|MINOR|REVISION) (\d+)')
     with open(_cmake_file, 'rb') as f:
@@ -64,16 +64,17 @@ def get_author_info():
 
     return ', '.join(authors), ', '.join(emails)
 
-
 def get_long_description():
     with open(_readme_file, 'rb') as f:
         return f.read().decode('utf-8')
 
 
+version_info = get_version_info()
+author_info = get_author_info()
+
 def build_libnlpcc():
     if _libnlpcc_built:
-        print('have build')
-        #return  # Skip building binary file
+        return  # Skip building binary file
     print('building libnlp.cc into %s' % _build_dir)
 
     is_windows = sys.platform == 'win32'
@@ -92,6 +93,7 @@ def build_libnlpcc():
         '-DENABLE_TESTING:BOOL=OFF',
         '-DENABLE_PYTHON:BOOL=ON',
         '-DCMAKE_BUILD_TYPE=Release',
+        '-DPKG_VERSION={}'.format(version_info),
         '-DCMAKE_INSTALL_PREFIX={}'.format(_clib_dir),
         '-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={}'.format(_clib_dir),
         '-DPYTHON_EXECUTABLE={}'.format(sys.executable),
@@ -150,7 +152,7 @@ class BDistWheelCommand(wheel.bdist_wheel.bdist_wheel, object):
 
         if sys.platform == 'darwin':
             _, _, _, _, machine = os.uname()
-            return 'macosx-10.9-{}'.format(machine)
+            return 'macosx-10.14-{}'.format(machine)
 
         if os.name == 'posix':
             _, _, _, _, machine = os.uname()
@@ -167,10 +169,8 @@ class BDistWheelCommand(wheel.bdist_wheel.bdist_wheel, object):
         self.plat_name = self._determine_platform_tag()
 
 
-packages = ['libnlp', 'libnlp.normalize', 'libnlp.normalize.cc','libnlp.normalize.trimmer', 'libnlp.clib']
+packages = ['libnlp', 'libnlp.normalize', 'libnlp.normalize.cc', 'libnlp.clib']
 
-version_info = get_version_info()
-author_info = get_author_info()
 
 setuptools.setup(
     name='libnlp',
@@ -185,11 +185,10 @@ setuptools.setup(
     packages=packages,
     package_dir={'libnlp': 'python/libnlp'},
     package_data={str('libnlp'): [
-        'clib/nlp_cc*',
-        'clib/trimmer*',
-        'clib/share/libnlp/normalize/cc/*',
+        'clib/normalize_cc*',
+        'clib/share/libnlp/normalize/*',
     ]},
-    ext_modules=[NlpCCExtension('libnlp.clib.nlp_cc', 'python')],
+    ext_modules=[NlpCCExtension('libnlp.clib.normalize_cc', 'python')],
     cmdclass={
         'build_ext': BuildExtCommand,
         'bdist_wheel': BDistWheelCommand
@@ -213,5 +212,5 @@ setuptools.setup(
         'Topic :: Text Processing :: Linguistic',
     ],
     license='Apache License 2.0',
-    keywords=['libnlp', 'nlp', 'convert', 'chinese']
+    keywords=['libnlp', 'nlp', 'normalize', 'convert', 'chinese']
 )

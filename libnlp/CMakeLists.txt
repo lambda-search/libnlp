@@ -59,12 +59,14 @@ carbin_cc_binary(
         PUBLIC
 )
 
-if(ENABLE_PYTHON)
+if (ENABLE_PYTHON)
     find_package(pybind11 CONFIG)
-    pybind11_add_module(nlp_cc python/normalize/cc/py_libnlp_cc.cc)
-    target_link_libraries(nlp_cc PRIVATE libnlp::libnlp)
+    if (PKG_VERSION)
+        add_definitions(
+                -DVERSION="${PKG_VERSION}"
+        )
+    endif ()
+    pybind11_add_module(normalize_cc python/normalize/py_normalize.cc)
+    target_link_libraries(normalize_cc PRIVATE libnlp::libnlp)
 
-    pybind11_add_module(trimmer python/normalize/trimmer/py_libnlp_trimmer.cc)
-    target_link_libraries(trimmer PRIVATE libnlp::libnlp)
-
-endif()
+endif ()
