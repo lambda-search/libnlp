@@ -39,12 +39,24 @@ namespace libnlp::jieba {
             size_t end;
         }; // struct loc_word
 
-        void cut(const std::string &sentence, vector<std::string> &words, bool hmm = true) const {
+        void cut(const std::string &sentence, std::vector<std::string> &words, bool hmm = true) const {
             mix_seg_.cut(sentence, words, hmm);
         }
 
-        void cut(const std::string &sentence, vector<word_type> &words, bool hmm = true) const {
+        void cut(const std::string &sentence, std::vector<libnlp::word_type> &words, bool hmm = true) const {
             mix_seg_.cut(sentence, words, hmm);
+        }
+
+        std::vector<std::string> cut(const std::string &sentence, bool hmm = true) const {
+            std::vector<std::string> words;
+            mix_seg_.cut(sentence, words, hmm);
+            return words;
+        }
+
+        std::vector<libnlp::word_type> cut_with_pos(const std::string &sentence, bool hmm = true) const {
+            std::vector<libnlp::word_type> words;
+            mix_seg_.cut(sentence, words, hmm);
+            return words;
         }
 
         void cut_all(const std::string &sentence, std::vector<std::string> &words) const {
@@ -55,12 +67,36 @@ namespace libnlp::jieba {
             full_seg_.cut(sentence, words);
         }
 
+        std::vector<std::string> cut_all(const std::string &sentence) const {
+            std::vector<std::string> words;
+            full_seg_.cut(sentence, words);
+            return words;
+        }
+
+        std::vector<word_type> cut_all_with_pos(const std::string &sentence) const {
+            std::vector<word_type> words;
+            full_seg_.cut(sentence, words);
+            return words;
+        }
+
         void cut_for_search(const std::string &sentence, std::vector<std::string> &words, bool hmm = true) const {
             query_seg_.cut(sentence, words, hmm);
         }
 
         void cut_for_search(const std::string &sentence, std::vector<word_type> &words, bool hmm = true) const {
             query_seg_.cut(sentence, words, hmm);
+        }
+
+        std::vector<std::string> cut_for_search(const std::string &sentence, bool hmm = true) const {
+            std::vector<std::string> words;
+            query_seg_.cut(sentence, words, hmm);
+            return words;
+        }
+
+        std::vector<word_type> cut_for_search_with_pos(const std::string &sentence, bool hmm = true) const {
+            std::vector<word_type> words;
+            query_seg_.cut(sentence, words, hmm);
+            return words;
         }
 
         void cut_hmm(const std::string &sentence, std::vector<std::string> &words) const {
@@ -71,6 +107,18 @@ namespace libnlp::jieba {
             hmm_seg_.cut(sentence, words);
         }
 
+        std::vector<std::string> cut_hmm(const std::string &sentence) const {
+            std::vector<std::string> words;
+            hmm_seg_.cut(sentence, words);
+            return words;
+        }
+
+        std::vector<word_type> cut_hmm_wih_pos(const std::string &sentence) const {
+            std::vector<word_type> words;
+            hmm_seg_.cut(sentence, words);
+            return words;
+        }
+
         void cut_small(const std::string &sentence, std::vector<std::string> &words, size_t max_word_len) const {
             mp_seg_.cut(sentence, words, max_word_len);
         }
@@ -79,9 +127,28 @@ namespace libnlp::jieba {
             mp_seg_.cut(sentence, words, max_word_len);
         }
 
+        std::vector<std::string> cut_small(const std::string &sentence, size_t max_word_len) const {
+            std::vector<std::string> words;
+            mp_seg_.cut(sentence, words, max_word_len);
+            return words;
+        }
+
+        std::vector<word_type> cut_small_with_pos(const std::string &sentence,  size_t max_word_len) const {
+            std::vector<word_type> words;
+            mp_seg_.cut(sentence, words, max_word_len);
+            return words;
+        }
+
         void tag(const std::string &sentence, std::vector<std::pair<std::string, std::string> > &words) const {
             mix_seg_.tag(sentence, words);
         }
+
+        std::vector<std::pair<std::string, std::string> > tag(const std::string &sentence) const {
+            std::vector<std::pair<std::string, std::string> > words;
+            mix_seg_.tag(sentence, words);
+            return words;
+        }
+
 
         std::string lookup_tag(const std::string &str) const {
             return mix_seg_.lookup_tag(str);
@@ -95,7 +162,7 @@ namespace libnlp::jieba {
             return dict_trie_.insert_user_word(word, freq, tag);
         }
 
-        bool Find(const std::string &word) {
+        bool find(const std::string &word) {
             return dict_trie_.find(word);
         }
 

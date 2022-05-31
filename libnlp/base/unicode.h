@@ -35,7 +35,13 @@ namespace libnlp {
         word_type(const std::string &w, uint32_t o, uint32_t unicode_offset, uint32_t unicode_length)
                 : word(w), offset(o), unicode_offset(unicode_offset), unicode_length(unicode_length) {
         }
+        std::string to_string() const {
+            std::string str = "{word: " + word + ", offset: " + std::to_string(offset) + "}";
+            return str;
+        }
+
     }; // struct word_type
+
 
     inline std::ostream &operator<<(std::ostream &os, const word_type &w) {
         return os << "{\"word\": \"" << w.word << "\", \"offset\": " << w.offset << "}";
