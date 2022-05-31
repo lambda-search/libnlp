@@ -1,4 +1,12 @@
 
+/****************************************************************
+ * Copyright (c) 2022, liyinbin
+ * All rights reserved.
+ * Author by liyibin (jeff.li)
+ *
+ *****************************************************************/
+
+
 #include <cmath>
 
 #include "libnlp/normalize/cc/phrase_extract.h"

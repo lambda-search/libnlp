@@ -1,4 +1,12 @@
 
+/****************************************************************
+ * Copyright (c) 2022, liyinbin
+ * All rights reserved.
+ * Author by liyibin (jeff.li)
+ *
+ *****************************************************************/
+
+
 #include "libnlp/dict/serialized_values.h"
 #include "text_dict_test_base.h"
 

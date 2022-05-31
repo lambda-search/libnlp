@@ -1,4 +1,13 @@
 
+/****************************************************************
+ * Copyright (c) 2022, liyinbin
+ * All rights reserved.
+ * Author by liyibin (jeff.li)
+ *
+ *****************************************************************/
+
+
+
 #include "libnlp/base/utf8_util.h"
 #include "test_utils.h"
 

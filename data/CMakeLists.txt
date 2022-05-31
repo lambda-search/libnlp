@@ -7,3 +7,4 @@
 #################################################################
 
 add_subdirectory(normalize)
+add_subdirectory(segment)

@@ -8,7 +8,7 @@ namespace libnlp::cc {
     class ConfigTestBase : public ::testing::Test {
     protected:
         ConfigTestBase()
-                : CONFIG_TEST_PATH(TEST_DATA_ROOT"/config_test/config_test.json") {
+                : CONFIG_TEST_PATH(TEST_DATA_ROOT"/normalize/config_test/config_test.json") {
                 std::cout<<CONFIG_TEST_PATH<<std::endl;
         }
 

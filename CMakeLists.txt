@@ -151,6 +151,8 @@ add_definitions(
         -DPROJECT_BINARY_DIR="${PROJECT_BINARY_DIR}"
         -DTEST_DATA_ROOT="${CMAKE_SOURCE_DIR}/test/testdata"
         -DLIBNLP_SOURCE_DIR="${CMAKE_SOURCE_DIR}"
+        -DJIEBA_TEST_DATA_ROOT="${CMAKE_SOURCE_DIR}/test/testdata/segment/jieba"
+        -DJIEBA_DICT_DATA_ROOT="${CMAKE_SOURCE_DIR}/data/segment/jieba"
 )
 
 if (ENABLE_TESTING)

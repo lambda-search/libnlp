@@ -28,8 +28,8 @@
 namespace libnlp::cc {
 
     simple_converter *Initialize(const std::string &config_name) {
-        chdir(PROJECT_BINARY_DIR "/data/cc");
-        const std::string config_dir = LIBNLP_SOURCE_DIR "/data/cc/config/";
+        chdir(PROJECT_BINARY_DIR "/data/normalize");
+        const std::string config_dir = LIBNLP_SOURCE_DIR "/data/normalize/config/";
         const std::string config_path = config_dir + config_name + ".json";
         return new simple_converter(config_path);
     }
@@ -39,7 +39,7 @@ namespace libnlp::cc {
     }
 
     std::string ReadText(const std::string &filename) {
-        const std::string benchmark_data_dir = TEST_DATA_ROOT "/benchmark/";
+        const std::string benchmark_data_dir = TEST_DATA_ROOT "normalize/benchmark/";
         const std::string data_path = benchmark_data_dir + filename;
         std::ifstream stream(data_path);
         return std::string((std::istreambuf_iterator<char>(stream)),

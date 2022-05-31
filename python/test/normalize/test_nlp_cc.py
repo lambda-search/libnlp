@@ -13,7 +13,7 @@ from glob import glob
 
 _this_dir = os.path.dirname(os.path.abspath(__file__))
 _nlpcc_rootdir = os.path.abspath(os.path.join(_this_dir, '..', '..','..'))
-_test_assets_dir = os.path.join(_nlpcc_rootdir, 'test', 'testdata','testcases')
+_test_assets_dir = os.path.join(_nlpcc_rootdir, 'test', 'testdata','normalize','testcases')
 
 
 def test_import():

@@ -1,0 +1,161 @@
+
+/****************************************************************
+ * Copyright (c) 2022, liyinbin
+ * All rights reserved.
+ * Author by liyibin (jeff.li)
+ *
+ *****************************************************************/
+
+#pragma once
+
+#include <iostream>
+#include <stdlib.h>
+#include <assert.h>
+#include <string.h>
+
+namespace libnlp {
+    using namespace std;
+    /*
+     * inline_vector<T> : T must be primitive type (char , int, size_t), if T is struct or class, inline_vector<T> may be dangerous..
+     * inline_vector<T> is simple and not well-tested.
+     */
+    const size_t LOCAL_VECTOR_BUFFER_SIZE = 16;
+
+    template<class T>
+    class inline_vector {
+    public:
+        typedef const T *const_iterator;
+        typedef T value_type;
+        typedef size_t size_type;
+    private:
+        T buffer_[LOCAL_VECTOR_BUFFER_SIZE];
+        T *ptr_;
+        size_t size_;
+        size_t capacity_;
+    public:
+        inline_vector() {
+            init_internal();
+        };
+
+        inline_vector(const inline_vector<T> &vec) {
+            init_internal();
+            *this = vec;
+        }
+
+        inline_vector(const_iterator begin, const_iterator end) { // TODO: make it faster
+            init_internal();
+            while (begin != end) {
+                push_back(*begin++);
+            }
+        }
+
+        inline_vector(size_t size, const T &t) { // TODO: make it faster
+            init_internal();
+            while (size--) {
+                push_back(t);
+            }
+        }
+
+        ~inline_vector() {
+            if (ptr_ != buffer_) {
+                free(ptr_);
+            }
+        };
+    public:
+        inline_vector<T> &operator=(const inline_vector<T> &vec) {
+            clear();
+            size_ = vec.size();
+            capacity_ = vec.capacity();
+            if (vec.buffer_ == vec.ptr_) {
+                memcpy(buffer_, vec.buffer_, sizeof(T) * size_);
+                ptr_ = buffer_;
+            } else {
+                ptr_ = (T *) malloc(vec.capacity() * sizeof(T));
+                assert(ptr_);
+                memcpy(ptr_, vec.ptr_, vec.size() * sizeof(T));
+            }
+            return *this;
+        }
+
+    private:
+        void init_internal() {
+            ptr_ = buffer_;
+            size_ = 0;
+            capacity_ = LOCAL_VECTOR_BUFFER_SIZE;
+        }
+
+    public:
+        T &operator[](size_t i) {
+            return ptr_[i];
+        }
+
+        const T &operator[](size_t i) const {
+            return ptr_[i];
+        }
+
+        void push_back(const T &t) {
+            if (size_ == capacity_) {
+                assert(capacity_);
+                reserve(capacity_ * 2);
+            }
+            ptr_[size_++] = t;
+        }
+
+        void reserve(size_t size) {
+            if (size <= capacity_) {
+                return;
+            }
+            T *next = (T *) malloc(sizeof(T) * size);
+            assert(next);
+            T *old = ptr_;
+            ptr_ = next;
+            memcpy(ptr_, old, sizeof(T) * capacity_);
+            capacity_ = size;
+            if (old != buffer_) {
+                free(old);
+            }
+        }
+
+        bool empty() const {
+            return 0 == size();
+        }
+
+        size_t size() const {
+            return size_;
+        }
+
+        size_t capacity() const {
+            return capacity_;
+        }
+
+        const_iterator begin() const {
+            return ptr_;
+        }
+
+        const_iterator end() const {
+            return ptr_ + size_;
+        }
+
+        void clear() {
+            if (ptr_ != buffer_) {
+                free(ptr_);
+            }
+            init_internal();
+        }
+    };
+
+    template<class T>
+    ostream &operator<<(ostream &os, const inline_vector<T> &vec) {
+        if (vec.empty()) {
+            return os << "[]";
+        }
+        os << "[\"" << vec[0];
+        for (size_t i = 1; i < vec.size(); i++) {
+            os << "\", \"" << vec[i];
+        }
+        os << "\"]";
+        return os;
+    }
+
+}
+

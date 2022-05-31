@@ -1,6 +1,10 @@
-# Copyright (c) 2022, gottingen group.
+################################################################
+#
+# Copyright (c) 2022, liyinbin
 # All rights reserved.
-# Created by liyinbin lijippy@163.com
+# Author by liyibin (jeff.li)
+#
+#################################################################
 
 file(GLOB SRC "*.cc")
 

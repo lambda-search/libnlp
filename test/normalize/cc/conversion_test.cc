@@ -1,4 +1,11 @@
 
+/****************************************************************
+ * Copyright (c) 2022, liyinbin
+ * All rights reserved.
+ * Author by liyibin (jeff.li)
+ *
+ *****************************************************************/
+
 #include "libnlp/normalize/cc/conversion.h"
 #include "dict_group_test_base.h"
 

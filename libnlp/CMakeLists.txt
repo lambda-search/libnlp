@@ -10,6 +10,7 @@ FILE(GLOB_RECURSE BASE_SRC "base/*.cc")
 FILE(GLOB_RECURSE DICT_SRC "dict/*.cc")
 FILE(GLOB_RECURSE NORMALIZE_SRC "normalize/*.cc")
 FILE(GLOB_RECURSE TRIE_SRC "trie/*.cc")
+FILE(GLOB_RECURSE SEG_SRC "segment/*.cc")
 
 configure_file(
         "${PROJECT_SOURCE_DIR}/libnlp/config/libnlp_config.h.in"
@@ -20,6 +21,7 @@ SET(LIBNLP_SRC
         ${DICT_SRC}
         ${NORMALIZE_SRC}
         ${TRIE_SRC}
+        ${SEG_SRC}
         )
 
 carbin_cc_library(

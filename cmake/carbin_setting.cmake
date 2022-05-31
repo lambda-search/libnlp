@@ -30,3 +30,5 @@ endif (DEFINED LIB_INSTALL_DIR)
 
 set (DIR_SHARE_CC ${DIR_SHARE}/libnlp/normalize)
 set (DIR_SHARE_LOCALE ${DIR_SHARE}/locale/)
+
+set (DIR_SHARE_SEGMENT ${DIR_SHARE}/libnlp/segment)

@@ -1,4 +1,12 @@
 
+/****************************************************************
+ * Copyright (c) 2022, liyinbin
+ * All rights reserved.
+ * Author by liyibin (jeff.li)
+ *
+ *****************************************************************/
+
+
 #include <fstream>
 
 #include "libnlp/normalize/cc/cc_config.h"
@@ -55,8 +63,7 @@ namespace libnlp::cc {
         std::ifstream ifs(CONFIG_TEST_PATH);
         std::string content(std::istreambuf_iterator<char>(ifs),
                             (std::istreambuf_iterator<char>()));
-        std::string pathWithoutTrailingSlash = TEST_DATA_ROOT
-        "/config_test";
+        std::string pathWithoutTrailingSlash = TEST_DATA_ROOT"/normalize/config_test";
 
         const converter_ptr _ =
                 config.create_from_string(content, pathWithoutTrailingSlash);
