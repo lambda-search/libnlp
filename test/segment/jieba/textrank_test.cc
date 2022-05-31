@@ -32,7 +32,7 @@ TEST(text_rank_extractorTest, Test1) {
         }
 
         {
-            vector <pair<string, double>> words;
+            std::vector <std::pair<std::string, double>> words;
             Extractor.extract(s, words, topN);
             res << words;
             ASSERT_EQ(res, "[世界:1, 你好:0.519787]");

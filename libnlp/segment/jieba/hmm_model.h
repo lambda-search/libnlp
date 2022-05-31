@@ -26,7 +26,7 @@ namespace libnlp::jieba {
             B = 0, E = 1, M = 2, S = 3, STATUS_SUM = 4
         };
 
-        hmm_model(const string &modelPath) {
+        hmm_model(const std::string &modelPath) {
             memset(startProb, 0, sizeof(startProb));
             memset(transProb, 0, sizeof(transProb));
             statMap[0] = 'B';
@@ -43,8 +43,8 @@ namespace libnlp::jieba {
         ~hmm_model() {
         }
 
-        void load_model(const string &filePath) {
-            ifstream ifile(filePath.c_str());
+        void load_model(const std::string &filePath) {
+            std::ifstream ifile(filePath.c_str());
             XCHECK(ifile.is_open()) << "open " << filePath << " failed";
             string line;
             vector<string> tmp;
@@ -93,7 +93,7 @@ namespace libnlp::jieba {
             return cit->second;
         }
 
-        bool get_line(ifstream &ifile, string &line) {
+        bool get_line(std::ifstream &ifile, string &line) {
             while (getline(ifile, line)) {
                 auto sv = libnlp::trim_all(line, " ");
                 if (sv.empty()) {
@@ -107,7 +107,7 @@ namespace libnlp::jieba {
             return false;
         }
 
-        bool load_emit_prob(const string &line, emit_prob_map &mp) {
+        bool load_emit_prob(const std::string &line, emit_prob_map &mp) {
             if (line.empty()) {
                 return false;
             }

@@ -12,7 +12,7 @@
 
 ### hmm_model.utf8/gbk
 
-作为隐式马尔科夫模型(HMMSegment: Hidden Markov Model)分词所使用的词典。
+作为隐式马尔科夫模型(hmm_segment: Hidden Markov Model)分词所使用的词典。
 
 __对于MixSegment(混合MPSegment和HMMSegment两者)则同时使用以上两个词典__
 

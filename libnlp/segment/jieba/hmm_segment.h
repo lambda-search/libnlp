@@ -16,34 +16,34 @@
 #include "libnlp/segment/jieba/dict_trie.h"
 
 namespace libnlp::jieba {
-    class HMMSegment : public segment_base {
+    class hmm_segment : public segment_base {
     public:
-        HMMSegment(const string &filePath)
+        hmm_segment(const std::string &filePath)
                 : model_(new hmm_model(filePath)), isNeedDestroy_(true) {
         }
 
-        HMMSegment(const hmm_model *model)
+        hmm_segment(const hmm_model *model)
                 : model_(model), isNeedDestroy_(false) {
         }
 
-        ~HMMSegment() {
+        ~hmm_segment() {
             if (isNeedDestroy_) {
                 delete model_;
             }
         }
 
-        void cut(const string &sentence,
-                 vector<string> &words) const {
-            vector<word_type> tmp;
+        void cut(const std::string &sentence,
+                 std::vector<std::string> &words) const {
+            std::vector<word_type> tmp;
             cut(sentence, tmp);
             get_strings_from_words(tmp, words);
         }
 
-        void cut(const string &sentence,
-                 vector<word_type> &words) const {
+        void cut(const std::string &sentence,
+                 std::vector<word_type> &words) const {
             pre_filter pre_filter(symbols_, sentence);
             pre_filter::range range;
-            vector<word_range> wrs;
+            std::vector<word_range> wrs;
             wrs.reserve(sentence.size() / 2);
             while (pre_filter.has_next()) {
                 range = pre_filter.next();
@@ -55,21 +55,21 @@ namespace libnlp::jieba {
         }
 
         void
-        cut(rune_str_array::const_iterator begin, rune_str_array::const_iterator end, vector<word_range> &res) const {
+        cut(rune_str_array::const_iterator begin, rune_str_array::const_iterator end, std::vector<word_range> &res) const {
             rune_str_array::const_iterator left = begin;
             rune_str_array::const_iterator right = begin;
             while (right != end) {
                 if (right->rune < 0x80) {
                     if (left != right) {
-                        InternalCut(left, right, res);
+                        internal_cut(left, right, res);
                     }
                     left = right;
                     do {
-                        right = SequentialLetterRule(left, end);
+                        right = sequential_letter_rule(left, end);
                         if (right != left) {
                             break;
                         }
-                        right = NumbersRule(left, end);
+                        right = numbers_rule(left, end);
                         if (right != left) {
                             break;
                         }
@@ -83,14 +83,14 @@ namespace libnlp::jieba {
                 }
             }
             if (left != right) {
-                InternalCut(left, right, res);
+                internal_cut(left, right, res);
             }
         }
 
     private:
         // sequential letters rule
         rune_str_array::const_iterator
-        SequentialLetterRule(rune_str_array::const_iterator begin, rune_str_array::const_iterator end) const {
+        sequential_letter_rule(rune_str_array::const_iterator begin, rune_str_array::const_iterator end) const {
             rune_t x = begin->rune;
             if (('a' <= x && x <= 'z') || ('A' <= x && x <= 'Z')) {
                 begin++;
@@ -110,7 +110,7 @@ namespace libnlp::jieba {
 
         //
         rune_str_array::const_iterator
-        NumbersRule(rune_str_array::const_iterator begin, rune_str_array::const_iterator end) const {
+        numbers_rule(rune_str_array::const_iterator begin, rune_str_array::const_iterator end) const {
             rune_t x = begin->rune;
             if ('0' <= x && x <= '9') {
                 begin++;
@@ -128,10 +128,10 @@ namespace libnlp::jieba {
             return begin;
         }
 
-        void InternalCut(rune_str_array::const_iterator begin, rune_str_array::const_iterator end,
-                         vector<word_range> &res) const {
-            vector<size_t> status;
-            Viterbi(begin, end, status);
+        void internal_cut(rune_str_array::const_iterator begin, rune_str_array::const_iterator end,
+                          std::vector<word_range> &res) const {
+            std::vector<size_t> status;
+            viterbi(begin, end, status);
 
             rune_str_array::const_iterator left = begin;
             rune_str_array::const_iterator right;
@@ -145,9 +145,9 @@ namespace libnlp::jieba {
             }
         }
 
-        void Viterbi(rune_str_array::const_iterator begin,
+        void viterbi(rune_str_array::const_iterator begin,
                      rune_str_array::const_iterator end,
-                     vector<size_t> &status) const {
+                     std::vector<size_t> &status) const {
             size_t Y = hmm_model::STATUS_SUM;
             size_t X = end - begin;
 
@@ -155,8 +155,8 @@ namespace libnlp::jieba {
             size_t now, old, stat;
             double tmp, endE, endS;
 
-            vector<int> path(XYSize);
-            vector<double> weight(XYSize);
+            std::vector<int> path(XYSize);
+            std::vector<double> weight(XYSize);
 
             //start
             for (size_t y = 0; y < Y; y++) {
@@ -202,7 +202,7 @@ namespace libnlp::jieba {
 
         const hmm_model *model_;
         bool isNeedDestroy_;
-    }; // class HMMSegment
+    }; // class hmm_segment
 
 } // namespace libnlp::jieba
 

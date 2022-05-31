@@ -40,7 +40,7 @@ using std::tr1::unordered_set;
 namespace std {
 
     template<typename T>
-    ostream &operator<<(ostream &os, const vector<T> &v) {
+    ostream &operator<<(ostream &os, const std::vector<T> &v) {
         if (v.empty()) {
             return os << "[]";
         }
@@ -53,7 +53,7 @@ namespace std {
     }
 
     template<>
-    inline ostream &operator<<(ostream &os, const vector<string> &v) {
+    inline ostream &operator<<(ostream &os, const std::vector<string> &v) {
         if (v.empty()) {
             return os << "[]";
         }
@@ -127,7 +127,7 @@ namespace std {
     }
 
     template<class T>
-    ostream &operator<<(ostream &os, const set<T> &st) {
+    ostream &operator<<(ostream &os, const std::set<T> &st) {
         if (st.empty()) {
             os << "{}";
             return os;

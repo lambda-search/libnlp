@@ -16,8 +16,8 @@
 namespace libnlp::jieba {
     class mix_segment : public segment_tagged {
     public:
-        mix_segment(const string &mpSegDict, const string &hmmSegDict,
-                    const string &userDict = "")
+        mix_segment(const std::string &mpSegDict, const std::string &hmmSegDict,
+                    const std::string &userDict = "")
                 : mpSeg_(mpSegDict, userDict),
                   hmmSeg_(hmmSegDict) {
         }
@@ -29,17 +29,17 @@ namespace libnlp::jieba {
         ~mix_segment() {
         }
 
-        void cut(const string &sentence, vector<string> &words) const {
+        void cut(const std::string &sentence, vector<string> &words) const {
             cut(sentence, words, true);
         }
 
-        void cut(const string &sentence, vector<string> &words, bool hmm) const {
+        void cut(const std::string &sentence, vector<string> &words, bool hmm) const {
             vector<word_type> tmp;
             cut(sentence, tmp, hmm);
             get_strings_from_words(tmp, words);
         }
 
-        void cut(const string &sentence, vector<word_type> &words, bool hmm = true) const {
+        void cut(const std::string &sentence, vector<word_type> &words, bool hmm = true) const {
             pre_filter pre_filter(symbols_, sentence);
             pre_filter::range range;
             vector<word_range> wrs;
@@ -69,7 +69,7 @@ namespace libnlp::jieba {
             for (size_t i = 0; i < words.size(); i++) {
                 //if mp Get a word, it's ok, put it into result
                 if (words[i].left != words[i].right ||
-                    (words[i].left == words[i].right && mpSeg_.IsUserDictSingleChineseWord(words[i].left->rune))) {
+                    (words[i].left == words[i].right && mpSeg_.is_user_dict_single_chinese_word(words[i].left->rune))) {
                     res.push_back(words[i]);
                     continue;
                 }
@@ -77,7 +77,7 @@ namespace libnlp::jieba {
                 // if mp Get a single one and it is not in userdict, collect it in sequence
                 size_t j = i;
                 while (j < words.size() && words[j].left == words[j].right &&
-                       !mpSeg_.IsUserDictSingleChineseWord(words[j].left->rune)) {
+                       !mpSeg_.is_user_dict_single_chinese_word(words[j].left->rune)) {
                     j++;
                 }
 
@@ -102,17 +102,17 @@ namespace libnlp::jieba {
             return mpSeg_.get_dict_trie();
         }
 
-        bool tag(const string &src, vector<pair<string, string> > &res) const {
+        bool tag(const std::string &src, std::vector<std::pair<std::string, std::string> > &res) const {
             return tagger_.tag(src, res, *this);
         }
 
-        string lookup_tag(const string &str) const {
+        string lookup_tag(const std::string &str) const {
             return tagger_.lookup_tag(str, *this);
         }
 
     private:
         mp_segment mpSeg_;
-        HMMSegment hmmSeg_;
+        hmm_segment hmmSeg_;
         pos_tagger tagger_;
 
     }; // class mix_segment

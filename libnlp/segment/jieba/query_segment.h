@@ -19,7 +19,7 @@
 namespace libnlp::jieba {
     class query_segment : public segment_base {
     public:
-        query_segment(const string &dict, const string &model, const string &userDict = "")
+        query_segment(const std::string &dict, const std::string &model, const std::string &userDict = "")
                 : mixSeg_(dict, model, userDict),
                   trie_(mixSeg_.get_dict_trie()) {
         }
@@ -31,17 +31,17 @@ namespace libnlp::jieba {
         ~query_segment() {
         }
 
-        void cut(const string &sentence, vector<string> &words) const {
+        void cut(const std::string &sentence, vector<string> &words) const {
             cut(sentence, words, true);
         }
 
-        void cut(const string &sentence, vector<string> &words, bool hmm) const {
+        void cut(const std::string &sentence, vector<string> &words, bool hmm) const {
             vector<word_type> tmp;
             cut(sentence, tmp, hmm);
             get_strings_from_words(tmp, words);
         }
 
-        void cut(const string &sentence, vector<word_type> &words, bool hmm = true) const {
+        void cut(const std::string &sentence, vector<word_type> &words, bool hmm = true) const {
             pre_filter pre_filter(symbols_, sentence);
             pre_filter::range range;
             vector<word_range> wrs;

@@ -20,7 +20,7 @@ namespace libnlp::jieba {
 
     class mp_segment : public segment_tagged {
     public:
-        mp_segment(const string &dictPath, const string &userDictPath = "")
+        mp_segment(const std::string &dictPath, const std::string &userDictPath = "")
                 : dictTrie_(new dict_trie(dictPath, userDictPath)), isNeedDestroy_(true) {
         }
 
@@ -35,11 +35,11 @@ namespace libnlp::jieba {
             }
         }
 
-        void cut(const string &sentence, vector<string> &words) const {
+        void cut(const std::string &sentence, vector<string> &words) const {
             cut(sentence, words, MAX_WORD_LENGTH);
         }
 
-        void cut(const string &sentence,
+        void cut(const std::string &sentence,
                  vector<string> &words,
                  size_t max_word_len) const {
             vector<word_type> tmp;
@@ -47,7 +47,7 @@ namespace libnlp::jieba {
             get_strings_from_words(tmp, words);
         }
 
-        void cut(const string &sentence,
+        void cut(const std::string &sentence,
                  vector<word_type> &words,
                  size_t max_word_len = MAX_WORD_LENGTH) const {
             pre_filter pre_filter(symbols_, sentence);
@@ -72,24 +72,24 @@ namespace libnlp::jieba {
                             end,
                             dags,
                             max_word_len);
-            CalcDP(dags);
-            CutByDag(begin, end, dags, words);
+            calc_dp(dags);
+            cut_by_dag(begin, end, dags, words);
         }
 
         const dict_trie *get_dict_trie() const {
             return dictTrie_;
         }
 
-        bool tag(const string &src, vector<pair<string, string> > &res) const {
+        bool tag(const std::string &src, std::vector<std::pair<std::string, std::string> > &res) const {
             return tagger_.tag(src, res, *this);
         }
 
-        bool IsUserDictSingleChineseWord(const rune_t &value) const {
-            return dictTrie_->IsUserDictSingleChineseWord(value);
+        bool is_user_dict_single_chinese_word(const rune_t &value) const {
+            return dictTrie_->is_user_dict_single_chinese_word(value);
         }
 
     private:
-        void CalcDP(vector<dag_entity> &dags) const {
+        void calc_dp(vector<dag_entity> &dags) const {
             size_t nextPos;
             const dict_unit *p;
             double val;
@@ -98,7 +98,7 @@ namespace libnlp::jieba {
                 rit->pInfo = NULL;
                 rit->weight = MIN_DOUBLE;
                 assert(!rit->nexts.empty());
-                for (libnlp::inline_vector<pair<size_t, const dict_unit *> >::const_iterator it = rit->nexts.begin();
+                for (libnlp::inline_vector<std::pair<size_t, const dict_unit *> >::const_iterator it = rit->nexts.begin();
                      it != rit->nexts.end(); it++) {
                     nextPos = it->first;
                     p = it->second;
@@ -120,9 +120,9 @@ namespace libnlp::jieba {
             }
         }
 
-        void CutByDag(rune_str_array::const_iterator begin,
+        void cut_by_dag(rune_str_array::const_iterator begin,
                       rune_str_array::const_iterator end,
-                      const vector<dag_entity> &dags,
+                      const std::vector<dag_entity> &dags,
                       vector<word_range> &words) const {
             size_t i = 0;
             while (i < dags.size()) {

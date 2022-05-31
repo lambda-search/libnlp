@@ -21,7 +21,7 @@ namespace libnlp::jieba {
         virtual ~segment_tagged() {
         }
 
-        virtual bool tag(const string &src, vector <pair<string, string>> &res) const = 0;
+        virtual bool tag(const std::string &src, std::vector<std::pair<std::string, std::string>> &res) const = 0;
 
         virtual const dict_trie *get_dict_trie() const = 0;
 

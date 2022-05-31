@@ -28,17 +28,17 @@ namespace libnlp::jieba {
         ~pos_tagger() {
         }
 
-        bool tag(const string &src, vector<pair<string, string> > &res, const segment_tagged &segment) const {
-            vector<string> CutRes;
+        bool tag(const std::string &src, std::vector<std::pair<std::string, std::string> > &res, const segment_tagged &segment) const {
+            std::vector<std::string> CutRes;
             segment.cut(src, CutRes);
 
-            for (vector<string>::iterator itr = CutRes.begin(); itr != CutRes.end(); ++itr) {
+            for (std::vector<std::string>::iterator itr = CutRes.begin(); itr != CutRes.end(); ++itr) {
                 res.push_back(make_pair(*itr, lookup_tag(*itr, segment)));
             }
             return !res.empty();
         }
 
-        string lookup_tag(const string &str, const segment_tagged &segment) const {
+        string lookup_tag(const std::string &str, const segment_tagged &segment) const {
             const dict_unit *tmp = NULL;
             rune_str_array runes;
             const dict_trie *dict = segment.get_dict_trie();

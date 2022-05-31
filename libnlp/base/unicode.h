@@ -28,11 +28,11 @@ namespace libnlp {
         uint32_t unicode_offset;
         uint32_t unicode_length;
 
-        word_type(const string &w, uint32_t o)
+        word_type(const std::string &w, uint32_t o)
                 : word(w), offset(o) {
         }
 
-        word_type(const string &w, uint32_t o, uint32_t unicode_offset, uint32_t unicode_length)
+        word_type(const std::string &w, uint32_t o, uint32_t unicode_offset, uint32_t unicode_length)
                 : word(w), offset(o), unicode_offset(unicode_offset), unicode_length(unicode_length) {
         }
     }; // struct word_type
@@ -173,7 +173,7 @@ namespace libnlp {
         return true;
     }
 
-    inline bool decode_runes_in_string(const string &s, rune_str_array &runes) {
+    inline bool decode_runes_in_string(const std::string &s, rune_str_array &runes) {
         return decode_runes_in_string(s.c_str(), s.size(), runes);
     }
 
@@ -190,16 +190,16 @@ namespace libnlp {
         return true;
     }
 
-    inline bool is_single_word(const string &str) {
+    inline bool is_single_word(const std::string &str) {
         rune_str_lite rp = decode_rune_in_string(str.c_str(), str.size());
         return rp.len == str.size();
     }
 
-    inline bool decode_runes_in_string(const string &s, unicode &unicode) {
+    inline bool decode_runes_in_string(const std::string &s, unicode &unicode) {
         return decode_runes_in_string(s.c_str(), s.size(), unicode);
     }
 
-    inline unicode decode_runes_in_string(const string &s) {
+    inline unicode decode_runes_in_string(const std::string &s) {
         unicode result;
         decode_runes_in_string(s, result);
         return result;
@@ -208,7 +208,7 @@ namespace libnlp {
 
     // [left, right]
     inline word_type
-    get_word_from_runes(const string &s, rune_str_array::const_iterator left, rune_str_array::const_iterator right) {
+    get_word_from_runes(const std::string &s, rune_str_array::const_iterator left, rune_str_array::const_iterator right) {
         assert(right->offset >= left->offset);
         uint32_t len = right->offset - left->offset + right->len;
         uint32_t unicode_length = right->unicode_offset - left->unicode_offset + right->unicode_length;
@@ -216,25 +216,25 @@ namespace libnlp {
     }
 
     inline string
-    get_string_from_runes(const string &s, rune_str_array::const_iterator left, rune_str_array::const_iterator right) {
+    get_string_from_runes(const std::string &s, rune_str_array::const_iterator left, rune_str_array::const_iterator right) {
         assert(right->offset >= left->offset);
         uint32_t len = right->offset - left->offset + right->len;
         return s.substr(left->offset, len);
     }
 
-    inline void get_words_from_word_ranges(const string &s, const vector<word_range> &wrs, vector<word_type> &words) {
+    inline void get_words_from_word_ranges(const std::string &s, const std::vector<word_range> &wrs, vector<word_type> &words) {
         for (size_t i = 0; i < wrs.size(); i++) {
             words.push_back(get_word_from_runes(s, wrs[i].left, wrs[i].right));
         }
     }
 
-    inline vector<word_type> get_words_from_word_ranges(const string &s, const vector<word_range> &wrs) {
+    inline vector<word_type> get_words_from_word_ranges(const std::string &s, const std::vector<word_range> &wrs) {
         vector<word_type> result;
         get_words_from_word_ranges(s, wrs, result);
         return result;
     }
 
-    inline void get_strings_from_words(const vector<word_type> &words, vector<string> &strs) {
+    inline void get_strings_from_words(const std::vector<word_type> &words, vector<string> &strs) {
         strs.resize(words.size());
         for (size_t i = 0; i < words.size(); ++i) {
             strs[i] = words[i].word;

@@ -60,8 +60,8 @@ PYBIND11_MODULE(normalize_cc, m) {
             .def_readonly_static("utf16_t", &libnlp::normalize::xstring::utf16_t)
             .def("__str__", &libnlp::normalize::xstring::data);
 
-#ifdef VERSION
-    m.attr("__version__") = VERSION;
+#ifdef NOR_VERSION
+    m.attr("__version__") = NOR_VERSION;
 #else
     m.attr("__version__") = "dev";
 #endif

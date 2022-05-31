@@ -71,10 +71,13 @@ if (ENABLE_PYTHON)
     find_package(pybind11 CONFIG)
     if (PKG_VERSION)
         add_definitions(
-                -DVERSION="${PKG_VERSION}"
+                -DNOR_VERSION="${PKG_VERSION}"
+                -DSEG_VERSION="${PKG_VERSION}"
         )
-    endif ()
+    endif (PKG_VERSION)
     pybind11_add_module(normalize_cc python/normalize/py_normalize.cc)
     target_link_libraries(normalize_cc PRIVATE libnlp::libnlp)
 
-endif ()
+    pybind11_add_module(segment_cc python/segment/py_segment.cc)
+    target_link_libraries(segment_cc PRIVATE libnlp::libnlp)
+endif (ENABLE_PYTHON)

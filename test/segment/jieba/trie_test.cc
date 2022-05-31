@@ -58,15 +58,15 @@ TEST(DictTrieTest, Test1) {
 
     //EXPECT_EQ("[\"26469\", \"21040\"] v -8.870", s2);
     word = "清华大学";
-    libnlp::inline_vector <pair<size_t, const dict_unit *>> res;
+    libnlp::inline_vector <std::pair<size_t, const dict_unit *>> res;
     const char *words[] = {"清", "清华", "清华大学"};
     for (size_t i = 0; i < sizeof(words) / sizeof(words[0]); i++) {
         ASSERT_TRUE(decode_runes_in_string(words[i], uni));
-        res.push_back(make_pair(uni.size() - 1, trie.find(uni.begin(), uni.end())));
+        res.push_back(std::make_pair(uni.size() - 1, trie.find(uni.begin(), uni.end())));
         //resMap[uni.size() - 1] = trie.find(uni.begin(), uni.end());
     }
-    vector<pair<size_t, const dict_unit *> > vec;
-    vector<struct dag_entity> dags;
+    std::vector<std::pair<size_t, const dict_unit *> > vec;
+    std::vector<struct dag_entity> dags;
     ASSERT_TRUE(decode_runes_in_string(word, uni));
     trie.find(uni.begin(), uni.end(), dags);
     ASSERT_EQ(dags.size(), uni.size());

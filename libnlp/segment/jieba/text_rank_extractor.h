@@ -13,23 +13,21 @@
 #include "libnlp/segment/jieba/jieba.h"
 
 namespace libnlp::jieba {
-    using namespace libnlp;
-    using namespace std;
 
     class text_rank_extractor {
     public:
-        typedef struct _Word {
+        struct word_type {
             string word;
             vector<size_t> offsets;
             double weight;
-        } word_type; // struct word_type
+        }; // struct word_type
     private:
-        typedef std::map<string, word_type> word_map;
+        typedef std::map<std::string, word_type> word_map;
 
         class word_graph {
         private:
             typedef double Score;
-            typedef string Node;
+            typedef std::string Node;
             typedef std::set<Node> node_set;
 
             typedef std::map<Node, double> Edges;
@@ -99,30 +97,31 @@ namespace libnlp::jieba {
         };
 
     public:
-        text_rank_extractor(const string &dictPath,
-                          const string &hmmFilePath,
-                          const string &stopWordPath,
-                          const string &userDict = "")
+        text_rank_extractor(const std::string &dictPath,
+                            const std::string &hmmFilePath,
+                            const std::string &stopWordPath,
+                            const std::string &userDict = "")
                 : segment_(dictPath, hmmFilePath, userDict) {
             load_stop_word_dict(stopWordPath);
         }
 
         text_rank_extractor(const dict_trie *dictTrie,
-                          const hmm_model *model,
-                          const string &stopWordPath)
+                            const hmm_model *model,
+                            const std::string &stopWordPath)
                 : segment_(dictTrie, model) {
             load_stop_word_dict(stopWordPath);
         }
 
-        text_rank_extractor(const jieba_engine &jieba, const string &stopWordPath) : segment_(jieba.get_dict_trie(),
-                                                                                     jieba.get_hmm_model()) {
+        text_rank_extractor(const jieba_engine &jieba, const std::string &stopWordPath) : segment_(
+                jieba.get_dict_trie(),
+                jieba.get_hmm_model()) {
             load_stop_word_dict(stopWordPath);
         }
 
         ~text_rank_extractor() {
         }
 
-        void extract(const string &sentence, vector<string> &keywords, size_t topN) const {
+        void extract(const std::string &sentence, vector<string> &keywords, size_t topN) const {
             vector<word_type> topWords;
             extract(sentence, topWords, topN);
             for (size_t i = 0; i < topWords.size(); i++) {
@@ -130,15 +129,15 @@ namespace libnlp::jieba {
             }
         }
 
-        void extract(const string &sentence, vector<pair<string, double> > &keywords, size_t topN) const {
+        void extract(const std::string &sentence, std::vector<std::pair<string, double> > &keywords, size_t topN) const {
             vector<word_type> topWords;
             extract(sentence, topWords, topN);
             for (size_t i = 0; i < topWords.size(); i++) {
-                keywords.push_back(pair<string, double>(topWords[i].word, topWords[i].weight));
+                keywords.push_back(std::pair<string, double>(topWords[i].word, topWords[i].weight));
             }
         }
 
-        void extract(const string &sentence, vector<word_type> &keywords, size_t topN, size_t span = 5,
+        void extract(const std::string &sentence, std::vector<word_type> &keywords, size_t topN, size_t span = 5,
                      size_t rankTime = 10) const {
             vector<string> words;
             segment_.cut(sentence, words);
@@ -175,14 +174,14 @@ namespace libnlp::jieba {
                 keywords.push_back(itr->second);
             }
 
-            topN = min(topN, keywords.size());
+            topN = std::min(topN, keywords.size());
             partial_sort(keywords.begin(), keywords.begin() + topN, keywords.end(), Compare);
             keywords.resize(topN);
         }
 
     private:
-        void load_stop_word_dict(const string &filePath) {
-            ifstream ifs(filePath.c_str());
+        void load_stop_word_dict(const std::string &filePath) {
+            std::ifstream ifs(filePath.c_str());
             XCHECK(ifs.is_open()) << "open " << filePath << " failed";
             string line;
             while (getline(ifs, line)) {
@@ -196,10 +195,10 @@ namespace libnlp::jieba {
         }
 
         mix_segment segment_;
-        unordered_set<string> stopWords_;
+        std::unordered_set<std::string> stopWords_;
     }; // class text_rank_extractor
 
-    inline ostream &operator<<(ostream &os, const text_rank_extractor::word_type &word) {
+    inline std::ostream &operator<<(std::ostream &os, const text_rank_extractor::word_type &word) {
         return os << "{\"word\": \"" << word.word << "\", \"offset\": " << word.offsets << ", \"weight\": "
                   << word.weight << "}";
     }

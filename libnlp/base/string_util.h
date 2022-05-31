@@ -32,9 +32,8 @@
 #include "libnlp/base/std_extension.h"
 
 namespace libnlp {
-    using namespace std;
 
-    inline string StringFormat(const char *fmt, ...) {
+    inline std::string StringFormat(const char *fmt, ...) {
         int size = 256;
         std::string str;
         va_list ap;
@@ -56,11 +55,11 @@ namespace libnlp {
     }
 
     template<class T>
-    void Join(T begin, T end, string &res, const string &connector) {
+    void Join(T begin, T end, std::string &res, const std::string &connector) {
         if (begin == end) {
             return;
         }
-        stringstream ss;
+        std::stringstream ss;
         ss << *begin;
         begin++;
         while (begin != end) {
@@ -71,18 +70,18 @@ namespace libnlp {
     }
 
     template<class T>
-    string Join(T begin, T end, const string &connector) {
-        string res;
+    std::string Join(T begin, T end, const std::string &connector) {
+        std::string res;
         Join(begin, end, res, connector);
         return res;
     }
 
-    inline string &Upper(string &str) {
+    inline std::string &Upper(std::string &str) {
         transform(str.begin(), str.end(), str.begin(), (int (*)(int)) toupper);
         return str;
     }
 
-    inline string &Lower(string &str) {
+    inline std::string &Lower(std::string &str) {
         transform(str.begin(), str.end(), str.begin(), (int (*)(int)) tolower);
         return str;
     }
@@ -110,14 +109,15 @@ namespace libnlp {
     }
 
 
-    inline void Split(const string &src, vector<string> &res, const string &pattern, size_t maxsplit = string::npos) {
+    inline void Split(const std::string &src, std::vector<std::string> &res, const std::string &pattern,
+                      size_t maxsplit = std::string::npos) {
         res.clear();
         size_t Start = 0;
         size_t end = 0;
-        string sub;
+        std::string sub;
         while (Start < src.size()) {
             end = src.find_first_of(pattern, Start);
-            if (string::npos == end || res.size() >= maxsplit) {
+            if (std::string::npos == end || res.size() >= maxsplit) {
                 sub = src.substr(Start);
                 res.push_back(sub);
                 return;
@@ -129,28 +129,29 @@ namespace libnlp {
         return;
     }
 
-    inline vector<string> Split(const string &src, const string &pattern, size_t maxsplit = string::npos) {
-        vector<string> res;
+    inline std::vector<std::string>
+    Split(const std::string &src, const std::string &pattern, size_t maxsplit = std::string::npos) {
+        std::vector<std::string> res;
         Split(src, res, pattern, maxsplit);
         return res;
     }
 
-    inline bool StartsWith(const string &str, const string &prefix) {
+    inline bool StartsWith(const std::string &str, const std::string &prefix) {
         if (prefix.length() > str.length()) {
             return false;
         }
         return 0 == str.compare(0, prefix.length(), prefix);
     }
 
-    inline bool EndsWith(const string &str, const string &suffix) {
+    inline bool EndsWith(const std::string &str, const std::string &suffix) {
         if (suffix.length() > str.length()) {
             return false;
         }
         return 0 == str.compare(str.length() - suffix.length(), suffix.length(), suffix);
     }
 
-    inline bool IsInStr(const string &str, char ch) {
-        return str.find(ch) != string::npos;
+    inline bool IsInStr(const std::string &str, char ch) {
+        return str.find(ch) != std::string::npos;
     }
 
     inline uint16_t TwocharToUint16(char high, char low) {
@@ -189,12 +190,12 @@ namespace libnlp {
     }
 
     template<class Uint16Container>
-    bool Utf8ToUnicode(const string &str, Uint16Container &vec) {
+    bool Utf8ToUnicode(const std::string &str, Uint16Container &vec) {
         return Utf8ToUnicode(str.c_str(), str.size(), vec);
     }
 
     template<class Uint32Container>
-    bool Utf8ToUnicode32(const string &str, Uint32Container &vec) {
+    bool Utf8ToUnicode32(const std::string &str, Uint32Container &vec) {
         uint32_t tmp;
         vec.clear();
         for (size_t i = 0; i < str.size();) {
@@ -249,7 +250,7 @@ namespace libnlp {
     }
 
     template<class Uint32ContainerConIter>
-    void Unicode32ToUtf8(Uint32ContainerConIter begin, Uint32ContainerConIter end, string &res) {
+    void Unicode32ToUtf8(Uint32ContainerConIter begin, Uint32ContainerConIter end, std::string &res) {
         res.clear();
         uint32_t ui;
         while (begin != end) {
@@ -274,7 +275,7 @@ namespace libnlp {
     }
 
     template<class Uint16ContainerConIter>
-    void UnicodeToUtf8(Uint16ContainerConIter begin, Uint16ContainerConIter end, string &res) {
+    void UnicodeToUtf8(Uint16ContainerConIter begin, Uint16ContainerConIter end, std::string &res) {
         res.clear();
         uint16_t ui;
         while (begin != end) {
@@ -319,12 +320,12 @@ namespace libnlp {
     }
 
     template<class Uint16Container>
-    bool GBKTrans(const string &str, Uint16Container &vec) {
+    bool GBKTrans(const std::string &str, Uint16Container &vec) {
         return GBKTrans(str.c_str(), str.size(), vec);
     }
 
     template<class Uint16ContainerConIter>
-    void GBKTrans(Uint16ContainerConIter begin, Uint16ContainerConIter end, string &res) {
+    void GBKTrans(Uint16ContainerConIter begin, Uint16ContainerConIter end, std::string &res) {
         res.clear();
         //pair<char, char> pa;
         char first, second;
@@ -342,10 +343,10 @@ namespace libnlp {
         }
     }
 
-/*
- * format example: "%Y-%m-%d %H:%M:%S"
- */
-    inline void GetTime(const string &format, string &timeStr) {
+    /*
+     * format example: "%Y-%m-%d %H:%M:%S"
+     */
+    inline void GetTime(const std::string &format, std::string &timeStr) {
         time_t timeNow;
         time(&timeNow);
         timeStr.resize(64);
@@ -353,7 +354,7 @@ namespace libnlp {
         timeStr.resize(len);
     }
 
-    inline string PathJoin(const string &path1, const string &path2) {
+    inline std::string PathJoin(const std::string &path1, const std::string &path2) {
         if (EndsWith(path1, "/")) {
             return path1 + path2;
         }

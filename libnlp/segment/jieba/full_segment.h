@@ -20,7 +20,7 @@ namespace libnlp::jieba {
 
     class full_segment : public segment_base {
     public:
-        full_segment(const string &dictPath) {
+        full_segment(const std::string &dictPath) {
             dictTrie_ = new dict_trie(dictPath);
             isNeedDestroy_ = true;
         }
@@ -36,14 +36,14 @@ namespace libnlp::jieba {
             }
         }
 
-        void cut(const string &sentence,
+        void cut(const std::string &sentence,
                  vector<string> &words) const {
             vector<word_type> tmp;
             cut(sentence, tmp);
             get_strings_from_words(tmp, words);
         }
 
-        void cut(const string &sentence,
+        void cut(const std::string &sentence,
                  vector<word_type> &words) const {
             pre_filter pre_filter(symbols_, sentence);
             pre_filter::range range;
@@ -62,7 +62,7 @@ namespace libnlp::jieba {
                  rune_str_array::const_iterator end,
                  vector<word_range> &res) const {
             // result of searching in trie tree
-            inline_vector<pair<size_t, const dict_unit *>> tRes;
+            inline_vector<std::pair<size_t, const dict_unit *>> tRes;
 
             // max index of res's words
             size_t maxIdx = 0;

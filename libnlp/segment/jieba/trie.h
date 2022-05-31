@@ -16,8 +16,6 @@
 
 namespace libnlp::jieba {
 
-    using namespace std;
-
     const size_t MAX_WORD_LENGTH = 512;
 
     struct dict_unit {
@@ -36,7 +34,7 @@ namespace libnlp::jieba {
     struct dag_entity {
         libnlp::rune_str runestr;
         // [offset, nexts.first]
-        libnlp::inline_vector<pair<size_t, const dict_unit *>> nexts;
+        libnlp::inline_vector<std::pair<size_t, const dict_unit *>> nexts;
         const dict_unit *pInfo;
         double weight;
         size_t nextPos; // TODO
@@ -52,14 +50,14 @@ namespace libnlp::jieba {
         }
 
     public:
-        typedef unordered_map<TrieKey, trie_node *> NextMap;
+        typedef std::unordered_map<TrieKey, trie_node *> NextMap;
         NextMap *next;
         const dict_unit *ptValue;
     };
 
     class base_trie {
     public:
-        base_trie(const vector<libnlp::unicode> &keys, const vector<const dict_unit *> &valuePointers)
+        base_trie(const std::vector<libnlp::unicode> &keys, const std::vector<const dict_unit *> &valuePointers)
                 : root_(new trie_node) {
             create_trie(keys, valuePointers);
         }
@@ -107,9 +105,9 @@ namespace libnlp::jieba {
                     ptNode = nullptr;
                 }
                 if (ptNode != nullptr) {
-                    res[i].nexts.push_back(pair<size_t, const dict_unit *>(i, ptNode->ptValue));
+                    res[i].nexts.push_back(std::pair<size_t, const dict_unit *>(i, ptNode->ptValue));
                 } else {
-                    res[i].nexts.push_back(pair<size_t, const dict_unit *>(i, static_cast<const dict_unit *>(nullptr)));
+                    res[i].nexts.push_back(std::pair<size_t, const dict_unit *>(i, static_cast<const dict_unit *>(nullptr)));
                 }
 
                 for (size_t j = i + 1; j < size_t(end - begin) && (j - i + 1) <= max_word_len; j++) {
@@ -122,7 +120,7 @@ namespace libnlp::jieba {
                     }
                     ptNode = citer->second;
                     if (nullptr != ptNode->ptValue) {
-                        res[i].nexts.push_back(pair<size_t, const dict_unit *>(j, ptNode->ptValue));
+                        res[i].nexts.push_back(std::pair<size_t, const dict_unit *>(j, ptNode->ptValue));
                     }
                 }
             }
@@ -143,7 +141,7 @@ namespace libnlp::jieba {
                 if (ptNode->next->end() == kmIter) {
                     trie_node *nextNode = new trie_node;
 
-                    ptNode->next->insert(make_pair(*citer, nextNode));
+                    ptNode->next->insert(std::make_pair(*citer, nextNode));
                     ptNode = nextNode;
                 } else {
                     ptNode = kmIter->second;
@@ -154,7 +152,7 @@ namespace libnlp::jieba {
         }
 
     private:
-        void create_trie(const vector<libnlp::unicode> &keys, const vector<const dict_unit *> &valuePointers) {
+        void create_trie(const std::vector<libnlp::unicode> &keys, const std::vector<const dict_unit *> &valuePointers) {
             if (valuePointers.empty() || keys.empty()) {
                 return;
             }

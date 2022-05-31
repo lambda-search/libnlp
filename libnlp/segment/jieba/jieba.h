@@ -6,6 +6,8 @@
  *****************************************************************/
 #pragma once
 
+#include <string>
+#include <vector>
 #include "libnlp/segment/jieba/query_segment.h"
 #include "libnlp/segment/jieba/keyword_extractor.h"
 
@@ -13,11 +15,11 @@ namespace libnlp::jieba {
 
     class jieba_engine {
     public:
-        jieba_engine(const string &dict_path,
-                  const string &model_path,
-                  const string &user_dict_path,
-                  const string &idfPath,
-                  const string &stopWordPath)
+        jieba_engine(const std::string &dict_path,
+                  const std::string &model_path,
+                  const std::string &user_dict_path,
+                  const std::string &idfPath,
+                  const std::string &stopWordPath)
                 : dict_trie_(dict_path, user_dict_path),
                   model_(model_path),
                   mp_seg_(&dict_trie_),
@@ -32,72 +34,72 @@ namespace libnlp::jieba {
         }
 
         struct loc_word {
-            string word;
+            std::string word;
             size_t begin;
             size_t end;
         }; // struct loc_word
 
-        void cut(const string &sentence, vector<string> &words, bool hmm = true) const {
+        void cut(const std::string &sentence, vector<std::string> &words, bool hmm = true) const {
             mix_seg_.cut(sentence, words, hmm);
         }
 
-        void cut(const string &sentence, vector<word_type> &words, bool hmm = true) const {
+        void cut(const std::string &sentence, vector<word_type> &words, bool hmm = true) const {
             mix_seg_.cut(sentence, words, hmm);
         }
 
-        void cut_all(const string &sentence, vector<string> &words) const {
+        void cut_all(const std::string &sentence, std::vector<std::string> &words) const {
             full_seg_.cut(sentence, words);
         }
 
-        void cut_all(const string &sentence, vector<word_type> &words) const {
+        void cut_all(const std::string &sentence, std::vector<word_type> &words) const {
             full_seg_.cut(sentence, words);
         }
 
-        void cut_for_search(const string &sentence, vector<string> &words, bool hmm = true) const {
+        void cut_for_search(const std::string &sentence, std::vector<std::string> &words, bool hmm = true) const {
             query_seg_.cut(sentence, words, hmm);
         }
 
-        void cut_for_search(const string &sentence, vector<word_type> &words, bool hmm = true) const {
+        void cut_for_search(const std::string &sentence, std::vector<word_type> &words, bool hmm = true) const {
             query_seg_.cut(sentence, words, hmm);
         }
 
-        void cut_hmm(const string &sentence, vector<string> &words) const {
+        void cut_hmm(const std::string &sentence, std::vector<std::string> &words) const {
             hmm_seg_.cut(sentence, words);
         }
 
-        void cut_hmm(const string &sentence, vector<word_type> &words) const {
+        void cut_hmm(const std::string &sentence, std::vector<word_type> &words) const {
             hmm_seg_.cut(sentence, words);
         }
 
-        void cut_small(const string &sentence, vector<string> &words, size_t max_word_len) const {
+        void cut_small(const std::string &sentence, std::vector<std::string> &words, size_t max_word_len) const {
             mp_seg_.cut(sentence, words, max_word_len);
         }
 
-        void cut_small(const string &sentence, vector<word_type> &words, size_t max_word_len) const {
+        void cut_small(const std::string &sentence, std::vector<word_type> &words, size_t max_word_len) const {
             mp_seg_.cut(sentence, words, max_word_len);
         }
 
-        void tag(const string &sentence, vector<pair<string, string> > &words) const {
+        void tag(const std::string &sentence, std::vector<std::pair<std::string, std::string> > &words) const {
             mix_seg_.tag(sentence, words);
         }
 
-        string lookup_tag(const string &str) const {
+        std::string lookup_tag(const std::string &str) const {
             return mix_seg_.lookup_tag(str);
         }
 
-        bool insert_user_word(const string &word, const string &tag = UNKNOWN_TAG) {
+        bool insert_user_word(const std::string &word, const std::string &tag = UNKNOWN_TAG) {
             return dict_trie_.insert_user_word(word, tag);
         }
 
-        bool insert_user_word(const string &word, int freq, const string &tag = UNKNOWN_TAG) {
+        bool insert_user_word(const std::string &word, int freq, const std::string &tag = UNKNOWN_TAG) {
             return dict_trie_.insert_user_word(word, freq, tag);
         }
 
-        bool Find(const string &word) {
+        bool Find(const std::string &word) {
             return dict_trie_.find(word);
         }
 
-        void reset_separators(const string &s) {
+        void reset_separators(const std::string &s) {
             //TODO
             mp_seg_.reset_separators(s);
             hmm_seg_.reset_separators(s);
@@ -114,16 +116,16 @@ namespace libnlp::jieba {
             return &model_;
         }
 
-        void load_user_dict(const vector<string> &buf) {
-            dict_trie_.LoadUserDict(buf);
+        void load_user_dict(const std::vector<string> &buf) {
+            dict_trie_.load_user_dict(buf);
         }
 
-        void load_user_dict(const set<string> &buf) {
-            dict_trie_.LoadUserDict(buf);
+        void load_user_dict(const std::set<string> &buf) {
+            dict_trie_.load_user_dict(buf);
         }
 
-        void load_user_dict(const string &path) {
-            dict_trie_.LoadUserDict(path);
+        void load_user_dict(const std::string &path) {
+            dict_trie_.load_user_dict(path);
         }
 
     private:
@@ -132,7 +134,7 @@ namespace libnlp::jieba {
 
         // They share the same dict trie and model
         mp_segment mp_seg_;
-        HMMSegment hmm_seg_;
+        hmm_segment hmm_seg_;
         mix_segment mix_seg_;
         full_segment full_seg_;
         query_segment query_seg_;

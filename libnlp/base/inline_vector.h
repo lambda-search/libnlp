@@ -14,7 +14,6 @@
 #include <string.h>
 
 namespace libnlp {
-    using namespace std;
     /*
      * inline_vector<T> : T must be primitive type (char , int, size_t), if T is struct or class, inline_vector<T> may be dangerous..
      * inline_vector<T> is simple and not well-tested.
@@ -145,7 +144,7 @@ namespace libnlp {
     };
 
     template<class T>
-    ostream &operator<<(ostream &os, const inline_vector<T> &vec) {
+    std::ostream &operator<<(std::ostream &os, const inline_vector<T> &vec) {
         if (vec.empty()) {
             return os << "[]";
         }

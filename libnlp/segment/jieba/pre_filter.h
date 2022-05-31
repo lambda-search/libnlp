@@ -26,7 +26,7 @@ namespace libnlp::jieba {
         }; // struct Range
 
         pre_filter(const std::unordered_set<rune_t> &symbols,
-                   const string &sentence)
+                   const std::string &sentence)
                 : symbols_(symbols) {
             if (!decode_runes_in_string(sentence, sentence_)) {
                 XLOG(ERROR) << "decode failed. ";

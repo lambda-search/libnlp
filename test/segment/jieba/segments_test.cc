@@ -194,7 +194,7 @@ TEST(MPSegmentTest, Test1) {
 }
 
 TEST(HMMSegmentTest, Test1) {
-    HMMSegment segment(JIEBA_DICT_DATA_ROOT"/hmm_model.utf8");;
+    hmm_segment segment(JIEBA_DICT_DATA_ROOT"/hmm_model.utf8");;
     {
         const char *str = "我来自北京邮电大学。。。学号123456";
         const char *res[] = {"我来", "自北京", "邮电大学", "。", "。", "。", "学号", "123456"};

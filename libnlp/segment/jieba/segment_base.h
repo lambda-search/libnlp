@@ -31,9 +31,9 @@ namespace libnlp::jieba {
         virtual ~segment_base() {
         }
 
-        virtual void cut(const string &sentence, vector<string> &words) const = 0;
+        virtual void cut(const std::string &sentence, vector<string> &words) const = 0;
 
-        bool reset_separators(const string &s) {
+        bool reset_separators(const std::string &s) {
             symbols_.clear();
             rune_str_array runes;
             if (!decode_runes_in_string(s, runes)) {

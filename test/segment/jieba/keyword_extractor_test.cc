@@ -24,26 +24,26 @@ TEST(KeywordExtractorTest, Test1) {
               JIEBA_DICT_DATA_ROOT"/idf.utf8",
               JIEBA_DICT_DATA_ROOT"/stop_words.utf8");
     {
-        string s("你好世界世界而且而且");
-        string res;
+        std::string s("你好世界世界而且而且");
+        std::string res;
         size_t topN = 5;
 
         {
-            vector <string> words;
+            std::vector <std::string> words;
             Extractor.extract(s, words, topN);
             res << words;
             ASSERT_EQ(res, "[\"世界\", \"你好\"]");
         }
 
         {
-            vector <pair<string, double>> words;
+            std::vector <std::pair<std::string, double>> words;
             Extractor.extract(s, words, topN);
             res << words;
             ASSERT_EQ(res, "[世界:8.73506, 你好:7.95788]");
         }
 
         {
-            vector <keyword_extractor::word_type> words;
+            std::vector <keyword_extractor::word_type> words;
             Extractor.extract(s, words, topN);
             res << words;
             ASSERT_EQ(res,
@@ -52,9 +52,9 @@ TEST(KeywordExtractorTest, Test1) {
     }
 
     {
-        string s("我是拖拉机学院手扶拖拉机专业的。不用多久，我就会升职加薪，当上CEO，走上人生巅峰。");
-        string res;
-        vector <keyword_extractor::word_type> wordweights;
+        std::string s("我是拖拉机学院手扶拖拉机专业的。不用多久，我就会升职加薪，当上CEO，走上人生巅峰。");
+        std::string res;
+        std::vector <keyword_extractor::word_type> wordweights;
         size_t topN = 5;
         Extractor.extract(s, wordweights, topN);
         res << wordweights;
@@ -63,9 +63,9 @@ TEST(KeywordExtractorTest, Test1) {
     }
 
     {
-        string s("一部iPhone6");
-        string res;
-        vector <keyword_extractor::word_type> wordweights;
+        std::string s("一部iPhone6");
+        std::string res;
+        std::vector <keyword_extractor::word_type> wordweights;
         size_t topN = 5;
         Extractor.extract(s, wordweights, topN);
         res << wordweights;

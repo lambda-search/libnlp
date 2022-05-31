@@ -42,7 +42,7 @@ namespace libnlp::jieba {
             WordWeightMax,
         }; // enum UserWordWeightOption
 
-        dict_trie(const string &dict_path, const string &user_dict_paths = "",
+        dict_trie(const std::string &dict_path, const std::string &user_dict_paths = "",
                  UserWordWeightOption user_word_weight_opt = WordWeightMedian) {
             init(dict_path, user_dict_paths, user_word_weight_opt);
         }
@@ -51,9 +51,9 @@ namespace libnlp::jieba {
             delete trie_;
         }
 
-        bool insert_user_word(const string &word, const string &tag = UNKNOWN_TAG) {
+        bool insert_user_word(const std::string &word, const std::string &tag = UNKNOWN_TAG) {
             dict_unit node_info;
-            if (!MakeNodeInfo(node_info, word, user_word_default_weight_, tag)) {
+            if (!make_node_info(node_info, word, user_word_default_weight_, tag)) {
                 return false;
             }
             active_node_infos_.push_back(node_info);
@@ -61,10 +61,10 @@ namespace libnlp::jieba {
             return true;
         }
 
-        bool insert_user_word(const string &word, int freq, const string &tag = UNKNOWN_TAG) {
+        bool insert_user_word(const std::string &word, int freq, const std::string &tag = UNKNOWN_TAG) {
             dict_unit node_info;
             double weight = freq ? log(1.0 * freq / freq_sum_) : user_word_default_weight_;
-            if (!MakeNodeInfo(node_info, word, weight, tag)) {
+            if (!make_node_info(node_info, word, weight, tag)) {
                 return false;
             }
             active_node_infos_.push_back(node_info);
@@ -83,7 +83,7 @@ namespace libnlp::jieba {
             trie_->find(begin, end, res, max_word_len);
         }
 
-        bool find(const string &word) {
+        bool find(const std::string &word) {
             const dict_unit *tmp = NULL;
             rune_str_array runes;
             if (!decode_runes_in_string(word, runes)) {
@@ -97,7 +97,7 @@ namespace libnlp::jieba {
             }
         }
 
-        bool IsUserDictSingleChineseWord(const rune_t &word) const {
+        bool is_user_dict_single_chinese_word(const rune_t &word) const {
             return is_in(user_dict_single_chinese_word_, word);
         }
 
@@ -105,17 +105,17 @@ namespace libnlp::jieba {
             return min_weight_;
         }
 
-        void inser_user_dict_node(const string &line) {
+        void inser_user_dict_node(const std::string &line) {
             vector<string> buf;
             dict_unit node_info;
             Split(line, buf, " ");
             if (buf.size() == 1) {
-                MakeNodeInfo(node_info,
+                make_node_info(node_info,
                              buf[0],
                              user_word_default_weight_,
                              UNKNOWN_TAG);
             } else if (buf.size() == 2) {
-                MakeNodeInfo(node_info,
+                make_node_info(node_info,
                              buf[0],
                              user_word_default_weight_,
                              buf[1]);
@@ -123,7 +123,7 @@ namespace libnlp::jieba {
                 int freq = atoi(buf[1].c_str());
                 assert(freq_sum_ > 0.0);
                 double weight = log(1.0 * freq / freq_sum_);
-                MakeNodeInfo(node_info, buf[0], weight, buf[2]);
+                make_node_info(node_info, buf[0], weight, buf[2]);
             }
             static_node_infos_.push_back(node_info);
             if (node_info.word.size() == 1) {
@@ -131,24 +131,24 @@ namespace libnlp::jieba {
             }
         }
 
-        void LoadUserDict(const vector<string> &buf) {
+        void load_user_dict(const std::vector<string> &buf) {
             for (size_t i = 0; i < buf.size(); i++) {
                 inser_user_dict_node(buf[i]);
             }
         }
 
-        void LoadUserDict(const set<string> &buf) {
+        void load_user_dict(const std::set<string> &buf) {
             std::set<string>::const_iterator iter;
             for (iter = buf.begin(); iter != buf.end(); iter++) {
                 inser_user_dict_node(*iter);
             }
         }
 
-        void LoadUserDict(const string &filePaths) {
+        void load_user_dict(const std::string &filePaths) {
             vector<string> files = libnlp::Split(filePaths, "|;");
             size_t lineno = 0;
             for (size_t i = 0; i < files.size(); i++) {
-                ifstream ifs(files[i].c_str());
+                std::ifstream ifs(files[i].c_str());
                 XCHECK(ifs.is_open()) << "open " << files[i] << " failed";
                 string line;
 
@@ -163,20 +163,20 @@ namespace libnlp::jieba {
 
 
     private:
-        void init(const string &dict_path, const string &user_dict_paths, UserWordWeightOption user_word_weight_opt) {
-            LoadDict(dict_path);
-            freq_sum_ = CalcFreqSum(static_node_infos_);
-            CalculateWeight(static_node_infos_, freq_sum_);
-            SetStaticWordWeights(user_word_weight_opt);
+        void init(const std::string &dict_path, const std::string &user_dict_paths, UserWordWeightOption user_word_weight_opt) {
+            load_dict(dict_path);
+            freq_sum_ = calc_freq_sum(static_node_infos_);
+            calculate_weight(static_node_infos_, freq_sum_);
+            set_static_word_weights(user_word_weight_opt);
 
             if (user_dict_paths.size()) {
-                LoadUserDict(user_dict_paths);
+                load_user_dict(user_dict_paths);
             }
-            Shrink(static_node_infos_);
+            shrink(static_node_infos_);
             CreateTrie(static_node_infos_);
         }
 
-        void CreateTrie(const vector<dict_unit> &dictUnits) {
+        void CreateTrie(const std::vector<dict_unit> &dictUnits) {
             assert(dictUnits.size());
             vector<unicode> words;
             vector<const dict_unit *> valuePointers;
@@ -189,10 +189,10 @@ namespace libnlp::jieba {
         }
 
 
-        bool MakeNodeInfo(dict_unit &node_info,
-                          const string &word,
+        bool make_node_info(dict_unit &node_info,
+                          const std::string &word,
                           double weight,
-                          const string &tag) {
+                          const std::string &tag) {
             if (!decode_runes_in_string(word, node_info.word)) {
                 XLOG(ERROR) << "Decode " << word << " failed.";
                 return false;
@@ -202,8 +202,8 @@ namespace libnlp::jieba {
             return true;
         }
 
-        void LoadDict(const string &filePath) {
-            ifstream ifs(filePath.c_str());
+        void load_dict(const std::string &filePath) {
+            std::ifstream ifs(filePath.c_str());
             XCHECK(ifs.is_open()) << "open " << filePath << " failed.";
             string line;
             vector<string> buf;
@@ -212,7 +212,7 @@ namespace libnlp::jieba {
             for (size_t lineno = 0; getline(ifs, line); lineno++) {
                 Split(line, buf, " ");
                 XCHECK(buf.size() == DICT_COLUMN_NUM) << "split result illegal, line:" << line;
-                MakeNodeInfo(node_info,
+                make_node_info(node_info,
                              buf[0],
                              atof(buf[1].c_str()),
                              buf[2]);
@@ -224,7 +224,7 @@ namespace libnlp::jieba {
             return lhs.weight < rhs.weight;
         }
 
-        void SetStaticWordWeights(UserWordWeightOption option) {
+        void set_static_word_weights(UserWordWeightOption option) {
             XCHECK(!static_node_infos_.empty());
             vector<dict_unit> x = static_node_infos_;
             sort(x.begin(), x.end(), WeightCompare);
@@ -244,7 +244,7 @@ namespace libnlp::jieba {
             }
         }
 
-        double CalcFreqSum(const vector<dict_unit> &node_infos) const {
+        double calc_freq_sum(const std::vector<dict_unit> &node_infos) const {
             double sum = 0.0;
             for (size_t i = 0; i < node_infos.size(); i++) {
                 sum += node_infos[i].weight;
@@ -252,7 +252,7 @@ namespace libnlp::jieba {
             return sum;
         }
 
-        void CalculateWeight(vector<dict_unit> &node_infos, double sum) const {
+        void calculate_weight(vector<dict_unit> &node_infos, double sum) const {
             assert(sum > 0.0);
             for (size_t i = 0; i < node_infos.size(); i++) {
                 dict_unit &node_info = node_infos[i];
@@ -261,12 +261,12 @@ namespace libnlp::jieba {
             }
         }
 
-        void Shrink(vector<dict_unit> &units) const {
-            vector<dict_unit>(units.begin(), units.end()).swap(units);
+        void shrink(vector<dict_unit> &units) const {
+            std::vector<dict_unit>(units.begin(), units.end()).swap(units);
         }
 
-        vector<dict_unit> static_node_infos_;
-        deque<dict_unit> active_node_infos_; // must not be vector
+        std::vector<dict_unit> static_node_infos_;
+        std::deque<dict_unit> active_node_infos_; // must not be vector
         base_trie *trie_;
 
         double freq_sum_;
