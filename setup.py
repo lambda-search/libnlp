@@ -34,7 +34,7 @@ except ImportError:
 
 
 def get_version_info():
-    version_info = ['0', '2', '0']
+    version_info = ['0', '3', '0']
     version_pattern = re.compile(
         r'NLPCC_VERSION_(MAJOR|MINOR|REVISION) (\d+)')
     with open(_cmake_file, 'rb') as f:
