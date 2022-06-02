@@ -50,7 +50,7 @@ namespace libnlp::cc {
 namespace libnlp::dict {
     class basic_dict;
 
-    class dict_entry;
+    class dict_entity;
 
     class dict_group;
 

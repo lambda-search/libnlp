@@ -42,8 +42,8 @@ namespace libnlp::dict {
 
     size_t darts_dict::key_max_length() const { return _max_length; }
 
-    std::optional<const dict_entry *> darts_dict::match(const char *word,
-                                                        size_t len) const {
+    std::optional<const dict_entity *> darts_dict::match(const char *word,
+                                                         size_t len) const {
         if (len > _max_length) {
             return std::nullopt;
         }
@@ -52,15 +52,15 @@ namespace libnlp::dict {
 
         dict.exactMatchSearch(word, result, len);
         if (result.value != -1) {
-            return std::optional<const dict_entry *>(
+            return std::optional<const dict_entity *>(
                     _lex->at(static_cast<size_t>(result.value)));
         } else {
             return std::nullopt;
         }
     }
 
-    std::optional<const dict_entry *> darts_dict::match_prefix(const char *word,
-                                                               size_t len) const {
+    std::optional<const dict_entity *> darts_dict::match_prefix(const char *word,
+                                                                size_t len) const {
         const size_t DEFAULT_NUM_ENTRIES = 64;
         Darts::DoubleArray &dict = *_internal->doubleArray;
         Darts::DoubleArray::value_type results[DEFAULT_NUM_ENTRIES];
@@ -80,7 +80,7 @@ namespace libnlp::dict {
             delete[] rematchedResults;
         }
         if (maxMatchedResult >= 0) {
-            return std::optional<const dict_entry *>(
+            return std::optional<const dict_entity *>(
                     _lex->at(static_cast<size_t>(maxMatchedResult)));
         } else {
             return std::nullopt;
@@ -134,7 +134,7 @@ namespace libnlp::dict {
         keys.resize(lexiconCount);
         keys_cstr.resize(lexiconCount);
         for (size_t i = 0; i < lexiconCount; i++) {
-            const dict_entry *entry = lex->at(i);
+            const dict_entity *entry = lex->at(i);
             keys[i] = entry->key();
             keys_cstr[i] = keys[i].c_str();
             _max_length = (std::max)(entry->key_length(), _max_length);

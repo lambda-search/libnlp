@@ -35,8 +35,8 @@ namespace libnlp::dict {
 
     size_t marisa_dict::key_max_length() const { return _max_length; }
 
-    std::optional<const dict_entry *> marisa_dict::match(const char *word,
-                                                         size_t len) const {
+    std::optional<const dict_entity *> marisa_dict::match(const char *word,
+                                                          size_t len) const {
         if (len > _max_length) {
             return std::nullopt;
         }
@@ -44,34 +44,34 @@ namespace libnlp::dict {
         marisa::Agent agent;
         agent.set_query(word, len);
         if (trie.lookup(agent)) {
-            return std::optional<const dict_entry *>(_lex->at(agent.key().id()));
+            return std::optional<const dict_entity *>(_lex->at(agent.key().id()));
         } else {
             return std::nullopt;
         }
     }
 
-    std::optional<const dict_entry *> marisa_dict::match_prefix(const char *word,
-                                                                size_t len) const {
+    std::optional<const dict_entity *> marisa_dict::match_prefix(const char *word,
+                                                                 size_t len) const {
         const marisa::Trie &trie = *_internal->marisa;
         marisa::Agent agent;
         agent.set_query(word, (std::min)(_max_length, len));
-        const dict_entry *match = nullptr;
+        const dict_entity *match = nullptr;
         while (trie.common_prefix_search(agent)) {
             match = _lex->at(agent.key().id());
         }
         if (match == nullptr) {
             return std::nullopt;
         } else {
-            return std::optional<const dict_entry *>(match);
+            return std::optional<const dict_entity *>(match);
         }
     }
 
-    std::vector<const dict_entry *> marisa_dict::match_all_prefixes(const char *word,
-                                                                    size_t len) const {
+    std::vector<const dict_entity *> marisa_dict::match_all_prefixes(const char *word,
+                                                                     size_t len) const {
         const marisa::Trie &trie = *_internal->marisa;
         marisa::Agent agent;
         agent.set_query(word, (std::min)(_max_length, len));
-        std::vector<const dict_entry *> matches;
+        std::vector<const dict_entity *> matches;
         while (trie.common_prefix_search(agent)) {
             matches.push_back(_lex->at(agent.key().id()));
         }
@@ -99,15 +99,15 @@ namespace libnlp::dict {
         // Extract lexicon from built Marisa Trie, in order to get the order of keys.
         marisa::Agent agent;
         agent.set_query("");
-        std::vector<std::unique_ptr<dict_entry>> entries;
+        std::vector<std::unique_ptr<dict_entity>> entries;
         entries.resize(values_lexicon->length());
         size_t _max_length = 0;
         while (dict->_internal->marisa->predictive_search(agent)) {
             const std::string key(agent.key().ptr(), agent.key().length());
             size_t id = agent.key().id();
             _max_length = (std::max)(key.length(), _max_length);
-            std::unique_ptr<dict_entry> entry(
-                    dict_entry_factory::create(key, values_lexicon->at(id)->values()));
+            std::unique_ptr<dict_entity> entry(
+                    dict_entity::create(key, values_lexicon->at(id)->values()));
             entries[id] = std::move(entry);
         }
         // Read values
@@ -121,11 +121,11 @@ namespace libnlp::dict {
         const lexicon_ptr &thatLexicon = thatDict.get_lexicon();
         size_t _max_length = 0;
         marisa::Keyset keyset;
-        std::unordered_map<std::string, std::unique_ptr<dict_entry>> key_value_map;
+        std::unordered_map<std::string, std::unique_ptr<dict_entity>> key_value_map;
         for (size_t i = 0; i < thatLexicon->length(); i++) {
-            const dict_entry *entry = thatLexicon->at(i);
+            const dict_entity *entry = thatLexicon->at(i);
             keyset.push_back(entry->key().c_str());
-            key_value_map[entry->key()].reset(dict_entry_factory::create(entry));
+            key_value_map[entry->key()].reset(dict_entity::create(entry));
             _max_length = (std::max)(entry->key_length(), _max_length);
         }
         // Build Marisa Trie
@@ -134,11 +134,11 @@ namespace libnlp::dict {
         // Extract lexicon from built Marisa Trie, in order to get the order of keys.
         marisa::Agent agent;
         agent.set_query("");
-        std::vector<std::unique_ptr<dict_entry>> entries;
+        std::vector<std::unique_ptr<dict_entity>> entries;
         entries.resize(thatLexicon->length());
         while (dict->_internal->marisa->predictive_search(agent)) {
             std::string key(agent.key().ptr(), agent.key().length());
-            std::unique_ptr<dict_entry> entry = std::move(key_value_map[key]);
+            std::unique_ptr<dict_entity> entry = std::move(key_value_map[key]);
             entries[agent.key().id()] = std::move(entry);
         }
         // Set lexicon with entries ordered by Marisa Trie key id.

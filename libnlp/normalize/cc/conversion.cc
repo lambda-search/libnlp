@@ -14,7 +14,7 @@ namespace libnlp::cc {
     std::string conversion::convert(const char *phrase) const {
         std::ostringstream buffer;
         for (const char *pstr = phrase; *pstr != '\0';) {
-            std::optional<const libnlp::dict::dict_entry *> matched = _dict->match_prefix(pstr);
+            std::optional<const libnlp::dict::dict_entity *> matched = _dict->match_prefix(pstr);
             size_t matchedLength;
             if (!matched) {
                 matchedLength = UTF8Util::NextCharLength(pstr);

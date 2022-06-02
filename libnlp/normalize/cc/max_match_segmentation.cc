@@ -23,7 +23,7 @@ segments_ptr max_match_segmentation::segment(const std::string &text) const {
     };
     size_t length = text.length();
     for (const char *pstr = text.c_str(); *pstr != '\0';) {
-        const std::optional<const libnlp::dict::dict_entry *> &matched = _dict->match_prefix(pstr, length);
+        const std::optional<const libnlp::dict::dict_entity *> &matched = _dict->match_prefix(pstr, length);
         size_t matchedLength;
         if (!matched) {
             matchedLength = UTF8Util::NextCharLength(pstr);

@@ -23,7 +23,7 @@ namespace libnlp::dict {
         return _max_length;
     }
 
-    static dict_entry *ParseKeyValues(const char *buff, size_t lineNum) {
+    static dict_entity *ParseKeyValues(const char *buff, size_t lineNum) {
         size_t length;
         const char *pbuff = UTF8Util::FindNextInline(buff, '\t');
         if (UTF8Util::IsLineEndingOrFileEnding(*pbuff)) {
@@ -43,9 +43,9 @@ namespace libnlp::dict {
         if (values.size() == 0) {
             throw InvalidTextDictionary("No value in an item", lineNum);
         } else if (values.size() == 1) {
-            return dict_entry_factory::create(key, values.at(0));
+            return dict_entity::create(key, values.at(0));
         } else {
-            return dict_entry_factory::create(key, values);
+            return dict_entity::create(key, values);
         }
     }
 
@@ -90,13 +90,13 @@ namespace libnlp::dict {
 
     size_t text_dict::key_max_length() const { return _max_length; }
 
-    std::optional<const dict_entry *> text_dict::match(const char *word, size_t len) const {
-        std::unique_ptr<dict_entry> entry(
-                new non_value_dict_entry(std::string(word, len)));
+    std::optional<const dict_entity *> text_dict::match(const char *word, size_t len) const {
+        std::unique_ptr<dict_entity> entry(
+                new dict_entity(std::string(word, len)));
         const auto &found = std::lower_bound(_lex->begin(), _lex->end(), entry,
-                                             dict_entry::UPtrLessThan);
+                                             dict_entity::smart_ptr_less_than);
         if ((found != _lex->end()) && ((*found)->key() == entry->key())) {
-            return std::optional<const dict_entry *>(found->get());
+            return std::optional<const dict_entity *>(found->get());
         } else {
             return std::nullopt;
         }

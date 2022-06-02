@@ -80,4 +80,6 @@ if (ENABLE_PYTHON)
 
     pybind11_add_module(segment_cc python/segment/py_segment.cc)
     target_link_libraries(segment_cc PRIVATE libnlp::libnlp)
+    pybind11_add_module(dict_cc python/dict/py_dict.cc)
+    target_link_libraries(dict_cc PRIVATE libnlp::libnlp)
 endif (ENABLE_PYTHON)

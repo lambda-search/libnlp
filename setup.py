@@ -177,7 +177,7 @@ class BDistWheelCommand(wheel.bdist_wheel.bdist_wheel, object):
         self.plat_name = self._determine_platform_tag()
 
 
-packages = ['libnlp', 'libnlp.normalize','libnlp.segment','libnlp.clib']
+packages = ['libnlp', 'libnlp.normalize','libnlp.segment','libnlp.dict','libnlp.clib']
 
 
 setuptools.setup(
@@ -195,6 +195,7 @@ setuptools.setup(
     package_data={str('libnlp'): [
         'clib/normalize_cc*',
         'clib/segment_cc*',
+        'clib/dict_cc*',
         'clib/share/libnlp/normalize/*',
         'clib/share/libnlp/segment/jieba/*',
         'clib/share/libnlp/segment/jieba/pos_dict/*',

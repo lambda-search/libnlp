@@ -33,32 +33,41 @@ namespace libnlp::dict {
         }
     }
 
+    void dict_builder::add(const dict_builder &other) {
+        for(auto &entity : *(other._lex)) {
+            _lex->add(dict_entity::create(entity->key(), entity->values()));
+        }
+    }
     void dict_builder::add(const std::string &key) {
-        auto de = dict_entry_factory::create(key);
+        auto de = dict_entity::create(key);
         _lex->add(de);
     }
 
     void dict_builder::add(const std::string &key, const std::string &value) {
-        auto de = dict_entry_factory::create(key,value);
+
+        auto de = dict_entity::create(key,value);
+        assert(de);
+        assert(_lex);
         _lex->add(de);
     }
 
     void dict_builder::add(const std::string &key, const std::vector<std::string> &values) {
-        auto de = dict_entry_factory::create(key, values);
+        auto de = dict_entity::create(key, values);
         _lex->add(de);
     }
 
-    basic_dict_ptr dict_builder::get_dict(const std::string &type) const {
+    dict dict_builder::get_dict(const std::string &type) const {
+        _lex->sort();
         basic_dict_ptr ptr = text_dict_ptr(new text_dict(_lex));
         if (type == "text") {
-            return ptr;
+            return dict(ptr);
         } else if (type == "ocd") {
-            return darts_dict::create_from_dict(*ptr.get());
+            return dict(darts_dict::create_from_dict(*ptr.get()));
         } else if (type == "ocd2") {
-            return marisa_dict::create_from_dict(*ptr.get());
+            return dict(marisa_dict::create_from_dict(*ptr.get()));
         } else {
             fprintf(stderr, "Unknown dictionary format: %s\n", type.c_str());
-            return nullptr;
+            return dict(nullptr);
         }
     }
 

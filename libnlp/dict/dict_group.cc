@@ -34,10 +34,10 @@ namespace libnlp::dict {
 
     size_t dict_group::key_max_length() const { return _key_max_length; }
 
-    std::optional<const dict_entry *> dict_group::match(const char *word,
+    std::optional<const dict_entity *> dict_group::match(const char *word,
                                                         size_t len) const {
         for (const auto &dict : _dicts) {
-            const std::optional<const dict_entry *> &prefix = dict->match(word, len);
+            const std::optional<const dict_entity *> &prefix = dict->match(word, len);
             if (prefix) {
                 return prefix;
             }
@@ -45,10 +45,10 @@ namespace libnlp::dict {
         return std::nullopt;
     }
 
-    std::optional<const dict_entry *> dict_group::match_prefix(const char *word,
+    std::optional<const dict_entity *> dict_group::match_prefix(const char *word,
                                                                size_t len) const {
         for (const auto &dict : _dicts) {
-            const std::optional<const dict_entry *> &prefix = dict->match_prefix(word, len);
+            const std::optional<const dict_entity *> &prefix = dict->match_prefix(word, len);
             if (prefix) {
                 return prefix;
             }
@@ -56,12 +56,12 @@ namespace libnlp::dict {
         return std::nullopt;
     }
 
-    std::vector<const dict_entry *> dict_group::match_all_prefixes(const char *word,
+    std::vector<const dict_entity *> dict_group::match_all_prefixes(const char *word,
                                                                    size_t len) const {
-        std::map<size_t, const dict_entry *> matched;
+        std::map<size_t, const dict_entity *> matched;
         // match all prefixes from all dictionaries
         for (const auto &dict : _dicts) {
-            const std::vector<const dict_entry *> &entries =
+            const std::vector<const dict_entity *> &entries =
                     dict->match_all_prefixes(word, len);
             for (const auto &entry : entries) {
                 size_t entryLen = entry->key_length();
@@ -71,7 +71,7 @@ namespace libnlp::dict {
                 }
             }
         }
-        std::vector<const dict_entry *> matchedEntries;
+        std::vector<const dict_entity *> matchedEntries;
         for (auto i = matched.rbegin(); i != matched.rend(); i++) {
             matchedEntries.push_back(i->second);
         }
@@ -82,8 +82,8 @@ namespace libnlp::dict {
         lexicon_ptr allLexicon(new lexicon);
         for (const auto &dict : _dicts) {
             const auto &lexicon = dict->get_lexicon();
-            for (const std::unique_ptr<dict_entry> &item : *lexicon) {
-                allLexicon->add(dict_entry_factory::create(item.get()));
+            for (const std::unique_ptr<dict_entity> &item : *lexicon) {
+                allLexicon->add(dict_entity::create(item.get()));
             }
         }
         allLexicon->sort();

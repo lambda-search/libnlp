@@ -52,7 +52,7 @@ namespace libnlp::dict {
         fwrite(valueBuf.c_str(), sizeof(char), valueTotalLength, fp);
 
         size_t valueCursor = 0;
-        for (const std::unique_ptr<dict_entry> &entry : *_lex) {
+        for (const std::unique_ptr<dict_entity> &entry : *_lex) {
             // Number of values
             uint16_t numValues = static_cast<uint16_t>(entry->num_values());
             WriteInteger(fp, numValues);
@@ -94,7 +94,7 @@ namespace libnlp::dict {
                 pValueBuffer += numValueBytes;
                 values.push_back(value);
             }
-            dict_entry *entry = dict_entry_factory::create("", values);
+            dict_entity *entry = dict_entity::create("", values);
             dict->_lex->add(entry);
         }
 
@@ -106,7 +106,7 @@ namespace libnlp::dict {
                                              uint32_t *valueTotalLength) const {
         *valueTotalLength = 0;
         // Calculate total length.
-        for (const std::unique_ptr<dict_entry> &entry : *_lex) {
+        for (const std::unique_ptr<dict_entity> &entry : *_lex) {
             assert(entry->num_values() != 0);
             for (const auto &value : entry->values()) {
                 *valueTotalLength += static_cast<uint32_t>(value.length()) + 1;
@@ -115,7 +115,7 @@ namespace libnlp::dict {
         // Write values to the buffer.
         valueBuffer->resize(*valueTotalLength, '\0');
         char *pValueBuffer = const_cast<char *>(valueBuffer->c_str());
-        for (const std::unique_ptr<dict_entry> &entry : *_lex) {
+        for (const std::unique_ptr<dict_entity> &entry : *_lex) {
             for (const auto &value : entry->values()) {
                 strcpy(pValueBuffer, value.c_str());
                 valueBytes->push_back(static_cast<uint16_t>(value.length() + 1));

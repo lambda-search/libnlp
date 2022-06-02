@@ -24,9 +24,9 @@ namespace libnlp::dict {
 
         std::string type() const override { return "ocd"; }
 
-        std::optional<const dict_entry *> match(const char *word, size_t len) const override;
+        std::optional<const dict_entity *> match(const char *word, size_t len) const override;
 
-        std::optional<const dict_entry *> match_prefix(const char *word,
+        std::optional<const dict_entity *> match_prefix(const char *word,
                                                         size_t len) const override;
 
         lexicon_ptr get_lexicon() const override;

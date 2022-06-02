@@ -9,7 +9,7 @@
 #pragma once
 
 #include "libnlp/base/common.h"
-#include "libnlp/dict/dict_entry.h"
+#include "libnlp/dict/dict_entity.h"
 
 namespace libnlp::dict {
     /**
@@ -20,18 +20,18 @@ namespace libnlp::dict {
     public:
         lexicon() {}
 
-        lexicon(std::vector<std::unique_ptr<dict_entry>> e)
-                : _entries(std::move(e)) {}
+        lexicon(std::vector<std::unique_ptr<dict_entity>> e)
+                : _entities(std::move(e)) {}
 
         lexicon(const lexicon &) = delete;
 
         lexicon &operator=(const lexicon &) = delete;
 
         // lexicon will take the ownership of the entry.
-        void add(dict_entry *entry) { _entries.emplace_back(entry); }
+        void add(dict_entity *entry) { _entities.emplace_back(entry); }
 
-        void add(std::unique_ptr<dict_entry> entry) {
-            _entries.push_back(std::move(entry));
+        void add(std::unique_ptr<dict_entity> entry) {
+            _entities.push_back(std::move(entry));
         }
 
         void sort();
@@ -42,19 +42,19 @@ namespace libnlp::dict {
         // Returns true if every key unique (after sorted).
         bool is_unique();
 
-        const dict_entry *at(size_t index) const { return _entries.at(index).get(); }
+        const dict_entity *at(size_t index) const { return _entities.at(index).get(); }
 
-        size_t length() const { return _entries.size(); }
+        size_t length() const { return _entities.size(); }
 
-        std::vector<std::unique_ptr<dict_entry>>::const_iterator begin() const {
-            return _entries.begin();
+        std::vector<std::unique_ptr<dict_entity>>::const_iterator begin() const {
+            return _entities.begin();
         }
 
-        std::vector<std::unique_ptr<dict_entry>>::const_iterator end() const {
-            return _entries.end();
+        std::vector<std::unique_ptr<dict_entity>>::const_iterator end() const {
+            return _entities.end();
         }
 
     private:
-        std::vector<std::unique_ptr<dict_entry>> _entries;
+        std::vector<std::unique_ptr<dict_entity>> _entities;
     };
 } // namespace libnlp::dict

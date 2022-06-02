@@ -17,7 +17,7 @@ namespace libnlp::dict {
 
     size_t binary_dict::key_max_length() const {
         size_t _max_length = 0;
-        for (const std::unique_ptr<dict_entry> &entry : *_lex) {
+        for (const std::unique_ptr<dict_entity> &entry : *_lex) {
             _max_length = (std::max)(_max_length, entry->key_length());
         }
         return _max_length;
@@ -40,7 +40,7 @@ namespace libnlp::dict {
         fwrite(valueBuf.c_str(), sizeof(char), valueTotalLength, fp);
 
         size_t keyCursor = 0, valueCursor = 0;
-        for (const std::unique_ptr<dict_entry> &entry : *_lex) {
+        for (const std::unique_ptr<dict_entity> &entry : *_lex) {
             // Number of values
             size_t numValues = entry->num_values();
             fwrite(&numValues, sizeof(size_t), 1, fp);
@@ -124,8 +124,8 @@ namespace libnlp::dict {
                 const char *value = dict->_value_buffer.c_str() + valueOffset;
                 values.push_back(value);
             }
-            dict_entry *entry = dict_entry_factory::create(key, values);
-            dict->_lex->add(entry);
+            dict_entity *entity = dict_entity::create(key, values);
+            dict->_lex->add(entity);
         }
 
         return dict;
@@ -139,45 +139,27 @@ namespace libnlp::dict {
         keyTotalLength = 0;
         valueTotalLength = 0;
         // Calculate total length
-        for (const std::unique_ptr<dict_entry> &entry : *_lex) {
-            keyTotalLength += entry->key_length() + 1;
-            assert(entry->num_values() != 0);
-            if (entry->num_values() == 1) {
-                const auto *svEntry =
-                        static_cast<const single_value_dict_entry *>(entry.get());
-                valueTotalLength += svEntry->value().length() + 1;
-            } else {
-                const auto *mvEntry =
-                        static_cast<const multi_value_dict_entry *>(entry.get());
-                for (const auto &value : mvEntry->values()) {
+        for (const std::unique_ptr<dict_entity> &entity : *_lex) {
+            keyTotalLength += entity->key_length() + 1;
+            assert(entity->num_values() != 0);
+                for (const auto &value : entity->values()) {
                     valueTotalLength += value.length() + 1;
                 }
-            }
         }
         // Write keys and values to buffers
         keyBuf.resize(keyTotalLength, '\0');
         valueBuf.resize(valueTotalLength, '\0');
         char *pKeyBuffer = const_cast<char *>(keyBuf.c_str());
         char *pValueBuffer = const_cast<char *>(valueBuf.c_str());
-        for (const std::unique_ptr<dict_entry> &entry : *_lex) {
-            strcpy(pKeyBuffer, entry->key().c_str());
+        for (const std::unique_ptr<dict_entity> &entity : *_lex) {
+            strcpy(pKeyBuffer, entity->key().c_str());
             keyOffset.push_back(pKeyBuffer - keyBuf.c_str());
-            pKeyBuffer += entry->key_length() + 1;
-            if (entry->num_values() == 1) {
-                const auto *svEntry =
-                        static_cast<const single_value_dict_entry *>(entry.get());
-                strcpy(pValueBuffer, svEntry->value().c_str());
-                valueOffset.push_back(pValueBuffer - valueBuf.c_str());
-                pValueBuffer += svEntry->value().length() + 1;
-            } else {
-                const auto *mvEntry =
-                        static_cast<const multi_value_dict_entry *>(entry.get());
-                for (const auto &value : mvEntry->values()) {
+            pKeyBuffer += entity->key_length() + 1;
+                for (const auto &value : entity->values()) {
                     strcpy(pValueBuffer, value.c_str());
                     valueOffset.push_back(pValueBuffer - valueBuf.c_str());
                     pValueBuffer += value.length() + 1;
                 }
-            }
         }
         assert(keyBuf.c_str() + keyTotalLength == pKeyBuffer);
         assert(valueBuf.c_str() + valueTotalLength == pValueBuffer);
