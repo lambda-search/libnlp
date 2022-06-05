@@ -18,6 +18,6 @@ cmake -B _build \
 
 WORKERS=`awk 'BEGIN{printf "%d\n",'$CPU_COUNT'/2}'`
 
-make -C _build -j $WORKERS libnlp
+make -C _build -j $WORKERS
 cmake --install _build --prefix $PREFIX
 cmake --install _build --prefix _libnlp_stage/

@@ -41,3 +41,5 @@ cmake-build-debug
 dist
 *.egg-info
 _libnlp_stage
+_build
+_build_*
