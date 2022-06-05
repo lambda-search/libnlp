@@ -12,18 +12,16 @@ set -e
 
 set -e
 
-# Build swigfaiss.so/swigfaiss_avx2.so.
 cmake -B _build_python_${PY_VER} \
       -Dlibnlp_ROOT=_libnlp_stage/ \
       -DCMAKE_BUILD_TYPE=Release \
-      -DPython_EXECUTABLE=$PYTHON \
       -DENABLE_CCLIB=OFF \
       -DENABLE_PYTHON=ON
       .
 
 WORKERS=`awk 'BEGIN{printf "%d\n",'$CPU_COUNT'/2}'`
 
-make -C _build -j $WORKERS
+make -C _build_python_${PY_VER} -j $WORKERS
 
 cd _build_python_${PY_VER}/libnlp
 $PYTHON setup.py install --single-version-externally-managed --record=record.txt --prefix=$PREFIX
