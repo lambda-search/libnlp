@@ -85,6 +85,7 @@ outputs:
         - cmake
         - zlib
       host:
+        - python {{ python }}
         - clang # [osx]
         - clangxx #   [osx]
         - gcc =8.5 # [linux]
@@ -96,6 +97,7 @@ outputs:
         - tclap
         - zlib
       run:
+        - python {{ python }}
         - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.15") }}  # [osx and x86_64]
         - {{ pin_subpackage('libnlp', exact=True) }}
         - clang # [osx]

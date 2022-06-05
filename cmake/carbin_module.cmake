@@ -31,7 +31,6 @@ MACRO(directory_list result curdir)
     SET(${result} ${dirlist})
 ENDMACRO()
 
-include(carbin_outof_source)
 include(carbin_platform)
 include(carbin_pkg_dump)
 
