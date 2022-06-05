@@ -1,0 +1,15 @@
+/Users/liyinbin/github/lambda-search/libnlp/_build_py/CMakeFiles/edit_cache.dir
+/Users/liyinbin/github/lambda-search/libnlp/_build_py/CMakeFiles/rebuild_cache.dir
+/Users/liyinbin/github/lambda-search/libnlp/_build_py/CMakeFiles/list_install_components.dir
+/Users/liyinbin/github/lambda-search/libnlp/_build_py/CMakeFiles/install.dir
+/Users/liyinbin/github/lambda-search/libnlp/_build_py/CMakeFiles/install/local.dir
+/Users/liyinbin/github/lambda-search/libnlp/_build_py/CMakeFiles/install/strip.dir
+/Users/liyinbin/github/lambda-search/libnlp/_build_py/libnlp/python/CMakeFiles/normalize_cc.dir
+/Users/liyinbin/github/lambda-search/libnlp/_build_py/libnlp/python/CMakeFiles/segment_cc.dir
+/Users/liyinbin/github/lambda-search/libnlp/_build_py/libnlp/python/CMakeFiles/dict_cc.dir
+/Users/liyinbin/github/lambda-search/libnlp/_build_py/libnlp/python/CMakeFiles/edit_cache.dir
+/Users/liyinbin/github/lambda-search/libnlp/_build_py/libnlp/python/CMakeFiles/rebuild_cache.dir
+/Users/liyinbin/github/lambda-search/libnlp/_build_py/libnlp/python/CMakeFiles/list_install_components.dir
+/Users/liyinbin/github/lambda-search/libnlp/_build_py/libnlp/python/CMakeFiles/install.dir
+/Users/liyinbin/github/lambda-search/libnlp/_build_py/libnlp/python/CMakeFiles/install/local.dir
+/Users/liyinbin/github/lambda-search/libnlp/_build_py/libnlp/python/CMakeFiles/install/strip.dir

@@ -33,11 +33,6 @@ include(carbin_print)
 # TODO modyify this for "-std=c++[x]"
 set(CMAKE_CXX_STANDARD 17)
 
-execute_process(
-        COMMAND bash -c "${PROJECT_SOURCE_DIR}/tools/get_project_version.sh ${PROJECT_SOURCE_DIR} | tr -d '\n'"
-        OUTPUT_VARIABLE PROJECT_REVISION
-)
-
 set(PROJECT_DESCRIPTION "carbin c++ lib")
 set(PROJECT_VERSION_MAJOR 0)
 set(PROJECT_VERSION_MINOR 1)
@@ -47,17 +42,17 @@ set(PROJECT_VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT
 option(CARBIN_STATUS_PRINT "cmake toolchain print" ON)
 option(CARBIN_STATUS_DEBUG "cmake toolchain debug info" ON)
 
-option(ENABLE_TESTING "enable unit test" ON)
+option(ENABLE_TESTING "enable unit test" OFF)
 option(CARBIN_PACKAGE_GEN "enable package gen" OFF)
-option(ENABLE_BENCHMARK "enable benchmark" ON)
+option(ENABLE_BENCHMARK "enable benchmark" OFF)
 option(ENABLE_PYTHON "enable benchmark" ON)
+option(ENABLE_CCLIB "enable benchmark" ON)
 option(ENABLE_EXAMPLE "enable benchmark" OFF)
 option(ENABLE_SUMMARY "enable summary output" ON)
 # it is too many
 option(ENABLE_SUMMARY_CXX_FLAG "enable cxx flags" OFF)
 
 set(CMAKE_VERBOSE_MAKEFILE OFF)
-set(PACKAGE_INSTALL_PREFIX "/usr/local")
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
@@ -141,9 +136,15 @@ carbin_cc_library(
 ]]
 
 #TODO do add you own subdirs
-add_subdirectory(libnlp)
-add_subdirectory(doc)
-add_subdirectory(data)
+if (ENABLE_CCLIB)
+    add_subdirectory(libnlp)
+    add_subdirectory(doc)
+    add_subdirectory(data)
+endif (ENABLE_CCLIB)
+
+if (ENABLE_PYTHON)
+    add_subdirectory(libnlp/python)
+endif (ENABLE_PYTHON)
 
 # TODO end
 
@@ -227,15 +228,16 @@ install(
 
 # Config
 #   * <prefix>/lib/cmake/Foo/FooTargets.cmake
-install(
-        EXPORT
-        "${TARGETS_EXPORT_NAME}"
-        NAMESPACE
-        "${namespace}"
-        DESTINATION
-        "${config_install_dir}"
-)
-
+if (ENABLE_CCLIB)
+    install(
+            EXPORT
+            "${TARGETS_EXPORT_NAME}"
+            NAMESPACE
+            "${namespace}"
+            DESTINATION
+            "${config_install_dir}"
+    )
+endif ()
 
 if (CARBIN_PACKAGE_GEN)
     include(carbin_package)

@@ -28,8 +28,8 @@ source:
 
 outputs:
   - name: libnlp
-    script: bld.sh   # [not win]
-    script: bld.bat  # [win]
+    script: bld-lib.sh   # [not win]
+    script: bld-lib.bat  # [win]
     build:
       #   string: "h{{ PKG_HASH }}_{{ number }}"
       run_exports:
@@ -94,10 +94,6 @@ outputs:
         - gcc =8.5 # [linux]
         - gxx =8.5 # [linux]
         - sysroot_linux-64=2.17 # [linux]
-        - gflags =2.2.2
-        - leveldb =1.22
-        - protobuf =3.12.4 # includes Protobuf compiler, C++ headers, Python libraries
-        - openssl =1.1.1
         - rapidjson =1.1.0
         - pybind11
         - tclap

@@ -41,6 +41,10 @@ install(DIRECTORY ${CMAKE_SOURCE_DIR}/libnlp
         PATTERN "*.hpp"
         )
 
+install(FILES ${PROJECT_BINARY_DIR}/libnlp/config/libnlp_config.h
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/libnlp/config
+        )
+
 carbin_cc_binary(
         NAMESPACE libnlp
         NAME cc_command_line
@@ -67,19 +71,3 @@ carbin_cc_binary(
         PUBLIC
 )
 
-if (ENABLE_PYTHON)
-    find_package(pybind11 CONFIG)
-    if (PKG_VERSION)
-        add_definitions(
-                -DNOR_VERSION="${PKG_VERSION}"
-                -DSEG_VERSION="${PKG_VERSION}"
-        )
-    endif (PKG_VERSION)
-    pybind11_add_module(normalize_cc python/normalize/py_normalize.cc)
-    target_link_libraries(normalize_cc PRIVATE libnlp::libnlp)
-
-    pybind11_add_module(segment_cc python/segment/py_segment.cc)
-    target_link_libraries(segment_cc PRIVATE libnlp::libnlp)
-    pybind11_add_module(dict_cc python/dict/py_dict.cc)
-    target_link_libraries(dict_cc PRIVATE libnlp::libnlp)
-endif (ENABLE_PYTHON)
