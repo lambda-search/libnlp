@@ -91,8 +91,7 @@ include(require_gflags)]]
 include(require_rapidjson)
 include(require_tclap)
 
-
-include(FindProtobuf)
+#include(FindProtobuf)
 
 #[[set(DYNAMIC_LIB
         ${CMAKE_THREAD_LIBS_INIT}

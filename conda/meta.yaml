@@ -84,6 +84,8 @@ outputs:
         - make
         - cmake
         - zlib
+        - rapidjson =1.1.0
+        - tclap
       host:
         - python {{ python }}
         - clang # [osx]
