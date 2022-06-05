@@ -14,7 +14,7 @@ set -e
 
 # Build swigfaiss.so/swigfaiss_avx2.so.
 cmake -B _build_python_${PY_VER} \
-      -Dlibnlp_ROOT=_liblibnlp_stage/ \
+      -Dlibnlp_ROOT=_libnlp_stage/ \
       -DCMAKE_BUILD_TYPE=Release \
       -DPython_EXECUTABLE=$PYTHON \
       -DENABLE_CCLIB=OFF \
