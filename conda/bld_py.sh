@@ -16,7 +16,7 @@ cmake -B _build_python_${PY_VER} \
       -Dlibnlp_ROOT=_libnlp_stage/ \
       -DCMAKE_BUILD_TYPE=Release \
       -DENABLE_CCLIB=OFF \
-      -DENABLE_PYTHON=ON
+      -DENABLE_PYTHON=ON \
       .
 
 

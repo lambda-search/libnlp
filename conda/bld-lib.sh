@@ -14,7 +14,7 @@ cmake -B _build \
         -DENABLE_TESTING=OFF \
         -DENABLE_BENCHMARK=OFF \
         -DCMAKE_INSTALL_LIBDIR=lib \
-        -DENABLE_PYTHON=OFF
+        -DENABLE_PYTHON=OFF .
 
 WORKERS=`awk 'BEGIN{printf "%d\n",'$CPU_COUNT'/2}'`
 
