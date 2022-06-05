@@ -6,6 +6,7 @@
  *
  *****************************************************************/
 
+#include <cassert>
 #include "libnlp/dict/dict_builder.h"
 #include "libnlp/dict/marisa_dict.h"
 #include "libnlp/dict/text_dict.h"

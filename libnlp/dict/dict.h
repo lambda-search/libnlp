@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include <cassert>
 #include "libnlp/dict/dict_base.h"
 #include "libnlp/dict/lexicon.h"
 #include "libnlp/dict/dict_entity.h"
@@ -19,18 +20,15 @@ namespace libnlp::dict {
     class dict {
     public:
         dict(const dict &other) : _base_dict(other._base_dict) {
-            assert(_base_dict);
         }
 
         dict &operator=(const dict &other) {
             _base_dict = other._base_dict;
-            assert(_base_dict);
             return *this;
         }
 
         std::optional<const dict_entity *> match(const char *word,
                                                  size_t len) const {
-            assert(_base_dict);
             return _base_dict->match(word, len);
         }
 
@@ -105,7 +103,6 @@ namespace libnlp::dict {
          * Returns the length of the longest key in the dictionary.
          */
         size_t key_max_length() const {
-            assert(_base_dict);
             return _base_dict->key_max_length();
         }
 
@@ -113,12 +110,10 @@ namespace libnlp::dict {
          * Returns all entries in the dictionary.
          */
         lexicon_ptr get_lexicon() const {
-            assert(_base_dict);
             return _base_dict->get_lexicon();
         }
 
         size_t size() const {
-            assert(_base_dict);
             return _base_dict->get_lexicon()->length();
         }
 
@@ -147,7 +142,6 @@ namespace libnlp::dict {
         friend class dict_builder;
 
         explicit dict(const basic_dict_ptr &ptr) : _base_dict(ptr) {
-            assert(_base_dict);
         }
 
 

@@ -13,6 +13,7 @@
 #include <fstream>
 #include <map>
 #include <string>
+#include <cassert>
 #include <cstring>
 #include <cstdlib>
 #include <stdint.h>

@@ -13,6 +13,7 @@
 #include <string>
 #include <vector>
 #include <ostream>
+#include <cassert>
 #include "libnlp/base/inline_vector.h"
 
 namespace libnlp {

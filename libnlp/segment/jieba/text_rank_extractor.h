@@ -10,6 +10,7 @@
 #pragma once
 
 #include <cmath>
+#include <cassert>
 #include "libnlp/segment/jieba/jieba.h"
 
 namespace libnlp::jieba {
