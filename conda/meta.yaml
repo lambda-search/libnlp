@@ -17,7 +17,7 @@ build:
   number: {{ number }}
 
 about:
-  home: https://github.com/lambda-search/karabor
+  home: https://github.com/lambda-search/libnlp
   license: Apache License 2
   license_family: APACHE
   license_file: LICENSE
