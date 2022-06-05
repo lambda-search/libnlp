@@ -46,7 +46,7 @@ namespace libnlp::cc {
         class iterator : public std::iterator<std::input_iterator_tag, const char *> {
         public:
             iterator(const segments *const _segments, size_t _cursor)
-                    : segments(_segments), cursor(_cursor) {}
+                    : _segments(_segments), cursor(_cursor) {}
 
             iterator &operator++() {
                 cursor++;
@@ -54,17 +54,17 @@ namespace libnlp::cc {
             }
 
             bool operator==(const iterator &that) const {
-                return cursor == that.cursor && segments == that.segments;
+                return cursor == that.cursor && _segments == that._segments;
             }
 
             bool operator!=(const iterator &that) const {
                 return !this->operator==(that);
             }
 
-            const char *operator*() const { return segments->at(cursor); }
+            const char *operator*() const { return _segments->at(cursor); }
 
         private:
-            const segments *const segments;
+            const segments *_segments;
             size_t cursor;
         };
 
