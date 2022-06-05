@@ -23,7 +23,7 @@ cmake -B _build_python_${PY_VER} \
 
 WORKERS=`awk 'BEGIN{printf "%d\n",'$CPU_COUNT'/2}'`
 
-make -C _build -j WORKERS
+make -C _build -j $WORKERS
 
 cd _build_python_${PY_VER}/libnlp
 $PYTHON setup.py install --single-version-externally-managed --record=record.txt --prefix=$PREFIX
