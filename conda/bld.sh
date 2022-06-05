@@ -13,7 +13,7 @@ cd _build
 cmake .. -DCMAKE_INSTALL_PREFIX=$PREFIX \
         -DCMAKE_BUILD_TYPE=Release \
         -DENABLE_TESTING=OFF \
-        -DENABLE_BENCHARK=OFF \
+        -DENABLE_BENCHMARK=OFF \
         -DENABLE_PYTHON=OFF
 
 cmake --build .
