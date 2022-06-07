@@ -31,11 +31,10 @@ MACRO(directory_list result curdir)
     SET(${result} ${dirlist})
 ENDMACRO()
 
-include(carbin_outof_source)
 include(carbin_platform)
 include(carbin_pkg_dump)
 
-CARBIN_ENSURE_OUT_OF_SOURCE_BUILD("must out of source dir")
+#CARBIN_ENSURE_OUT_OF_SOURCE_BUILD("must out of source dir")
 
 #if (NOT DEV_MODE AND ${PROJECT_VERSION} MATCHES "0.0.0")
 #    carbin_error("PROJECT_VERSION must be set in file project_profile or set -DDEV_MODE=true for develop debug")

@@ -1,7 +1,7 @@
 
 
 install(DIRECTORY jieba
-        DESTINATION ${DIR_SHARE_SEGMENT}
+        DESTINATION share/libnlp/segment
         FILES_MATCHING
         PATTERN "*.*"
         )

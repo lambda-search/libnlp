@@ -13,6 +13,7 @@
 #include <fstream>
 #include <map>
 #include <string>
+#include <cassert>
 #include <cstring>
 #include <cstdlib>
 #include <stdint.h>
@@ -36,14 +37,14 @@ namespace libnlp::jieba {
 
     class dict_trie {
     public:
-        enum UserWordWeightOption {
+        enum user_word_weight_option {
             WordWeightMin,
             WordWeightMedian,
             WordWeightMax,
-        }; // enum UserWordWeightOption
+        }; // enum user_word_weight_option
 
         dict_trie(const std::string &dict_path, const std::string &user_dict_paths = "",
-                 UserWordWeightOption user_word_weight_opt = WordWeightMedian) {
+                 user_word_weight_option user_word_weight_opt = WordWeightMedian) {
             init(dict_path, user_dict_paths, user_word_weight_opt);
         }
 
@@ -163,7 +164,7 @@ namespace libnlp::jieba {
 
 
     private:
-        void init(const std::string &dict_path, const std::string &user_dict_paths, UserWordWeightOption user_word_weight_opt) {
+        void init(const std::string &dict_path, const std::string &user_dict_paths, user_word_weight_option user_word_weight_opt) {
             load_dict(dict_path);
             freq_sum_ = calc_freq_sum(static_node_infos_);
             calculate_weight(static_node_infos_, freq_sum_);
@@ -224,7 +225,7 @@ namespace libnlp::jieba {
             return lhs.weight < rhs.weight;
         }
 
-        void set_static_word_weights(UserWordWeightOption option) {
+        void set_static_word_weights(user_word_weight_option option) {
             XCHECK(!static_node_infos_.empty());
             vector<dict_unit> x = static_node_infos_;
             sort(x.begin(), x.end(), WeightCompare);

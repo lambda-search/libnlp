@@ -8,8 +8,19 @@ set -e
 #
 #################################################################
 
-$PYTHON setup.py build_ext bdist_wheel
-whl=`ls dist`
-pip${PY_VER} install --force-reinstall --prefix=$PREFIX dist/${whl}
-rm -r build
-rm -r dist
+
+
+set -e
+
+cmake -B _build_python_${PY_VER} \
+      -Dlibnlp_ROOT=_libnlp_stage/ \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DENABLE_CCLIB=OFF \
+      -DENABLE_PYTHON=ON \
+      .
+
+
+make -C _build_python_${PY_VER}
+
+cd _build_python_${PY_VER}/libnlp
+$PYTHON setup.py install --single-version-externally-managed --record=record.txt --prefix=$PREFIX

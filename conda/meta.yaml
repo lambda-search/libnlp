@@ -17,7 +17,7 @@ build:
   number: {{ number }}
 
 about:
-  home: https://github.com/lambda-search/karabor
+  home: https://github.com/lambda-search/libnlp
   license: Apache License 2
   license_family: APACHE
   license_file: LICENSE
@@ -28,8 +28,8 @@ source:
 
 outputs:
   - name: libnlp
-    script: bld.sh   # [not win]
-    script: bld.bat  # [win]
+    script: bld-lib.sh   # [not win]
+    script: bld-lib.bat  # [win]
     build:
       #   string: "h{{ PKG_HASH }}_{{ number }}"
       run_exports:
@@ -50,10 +50,6 @@ outputs:
         - gcc =8.5 # [linux]
         - gxx =8.5 # [linux]
         - sysroot_linux-64=2.17 # [linux]
-        - gflags =2.2.2
-        - leveldb =1.22
-        - protobuf =3.12.4 # includes Protobuf compiler, C++ headers, Python libraries
-        - openssl =1.1.1
         - rapidjson =1.1.0
         - tclap
         - zlib
@@ -71,5 +67,51 @@ outputs:
       commands:
         - test -f $PREFIX/lib/liblibnlp.so              # [linux]
         - test -f $PREFIX/lib/liblibnlp.dylib           # [osx]
-      #  - conda inspect linkages -p $PREFIX $PKG_NAME  # [not win]
-      #  - conda inspect objects -p $PREFIX $PKG_NAME   # [osx]
+  - name: libnlppy
+    script: bld_py.sh   # [not win]
+    script: bld_py.bat  # [win]
+    build:
+      #   string: "h{{ PKG_HASH }}_{{ number }}"
+      run_exports:
+        - {{ pin_compatible('libnlp', exact=True) }}
+    requirements:
+      build:
+        - clang # [osx]
+        - clangxx #   [osx]
+        - gcc =8.5 # [linux]
+        - gxx =8.5 # [linux]
+        - sysroot_linux-64=2.17 # [linux]
+        - make
+        - cmake
+        - zlib
+        - rapidjson =1.1.0
+        - tclap
+      host:
+        - python {{ python }}
+        - clang # [osx]
+        - clangxx #   [osx]
+        - gcc =8.5 # [linux]
+        - gxx =8.5 # [linux]
+        - sysroot_linux-64=2.17 # [linux]
+        - {{ pin_subpackage('libnlp', exact=True) }}
+        - rapidjson =1.1.0
+        - pybind11
+        - tclap
+        - zlib
+      run:
+        - python {{ python }}
+        - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.15") }}  # [osx and x86_64]
+        - {{ pin_subpackage('libnlp', exact=True) }}
+        - clang # [osx]
+        - clangxx #   [osx]
+        - gcc =8.5 # [linux]
+        - gxx =8.5  # [linux]
+        - sysroot_linux-64=2.17 # [linux]
+        - zlib
+        - pybind11
+        - rapidjson =1.1.0
+        - tclap
+    #test:
+     # commands:
+      #  - test -f $PREFIX/lib/liblibnlp.so              # [linux]
+      #  - test -f $PREFIX/lib/liblibnlp.dylib           # [osx]

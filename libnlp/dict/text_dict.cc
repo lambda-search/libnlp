@@ -8,7 +8,6 @@
 
 #include <algorithm>
 #include <cassert>
-
 #include "libnlp/dict/lexicon.h"
 #include "libnlp/dict/text_dict.h"
 
